@@ -20,14 +20,14 @@ GameObject:
   m_Component:
   - component: {fileID: 4578893942626772}
   - component: {fileID: 54726789376187058}
-  - component: {fileID: 136057588454062610}
   - component: {fileID: 114044129457584646}
   - component: {fileID: 114806001754883158}
   - component: {fileID: 114329071794167816}
   - component: {fileID: 114483428961769052}
+  - component: {fileID: 136372726200707154}
   m_Layer: 0
   m_Name: Asteroid_2
-  m_TagString: Enemy
+  m_TagString: Hazard
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -144,7 +144,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64a2dd59afd794646b9de42e623aef99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 54726789376187058}
   maxRotation: 5
 --- !u!114 &114329071794167816
 MonoBehaviour:
@@ -157,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 760c18fe9fdce3c4fb3d533894ba3469, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  points: 1
   explosion: {fileID: 100004, guid: 2857e183f4cd3df4e9096e5b578bd32f, type: 2}
 --- !u!114 &114483428961769052
 MonoBehaviour:
@@ -169,7 +169,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1ebad08ad2a2342830e2b35f3327a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 54726789376187058}
   speed: -5
 --- !u!114 &114806001754883158
 MonoBehaviour:
@@ -182,18 +181,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d0d5c9179c060954986e1a1ea96b5f97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  rigidbody: {fileID: 54726789376187058}
   value: 0
---- !u!136 &136057588454062610
+--- !u!136 &136372726200707154
 CapsuleCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1294425687811420}
   m_Material: {fileID: 0}
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.50879884
-  m_Height: 1.4537842
+  m_Radius: 0.5
+  m_Height: 1.45
   m_Direction: 0
-  m_Center: {x: -0.039906263, y: 0.014849186, z: -0.020992517}
+  m_Center: {x: -0.05, y: 0, z: 0}

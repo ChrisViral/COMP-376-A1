@@ -3,10 +3,8 @@ using UnityEngine;
 
 namespace A1
 {
-    public class Player : MonoBehaviour
+    public class Player : PhysicsObject
     {
-        [SerializeField]
-        private Rigidbody rigidbody;
         [SerializeField]
         private float speed, tilt, fireRate;
         [SerializeField]
@@ -14,13 +12,15 @@ namespace A1
         [SerializeField]
         private GameObject bolt, explosion;
         [SerializeField]
-        private GameBoundary gameLimits;
+        private Bounds gameLimits;
+        
         private float nextFire;
 
         public void Die()
         {
             Destroy(this.gameObject);
             Instantiate(this.explosion, this.transform.position, Quaternion.identity);
+            GameLogic.Instance.EndGame();
         }
 
         private void Update()

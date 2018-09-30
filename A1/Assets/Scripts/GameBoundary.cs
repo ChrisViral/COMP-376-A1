@@ -1,16 +1,13 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace A1
 {
-    [Serializable]
-    public class GameBoundary
+    [RequireComponent(typeof(Collider))]
+    public class GameBoundary : MonoBehaviour
     {
-        [SerializeField]
-        private float xMin, xMax;
-        [SerializeField]
-        private float zMin, zMax;
-
-        public Vector3 BoundVector(Vector3 v) => new Vector3(Mathf.Clamp(v.x, this.xMin, this.xMax), 0f, Mathf.Clamp(v.z, this.zMin, this.zMax));
+        private void OnTriggerExit(Collider other)
+        {
+            Destroy(other.gameObject);
+        }
     }
 }

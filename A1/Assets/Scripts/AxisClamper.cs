@@ -2,10 +2,8 @@
 
 namespace A1
 {
-    public class AxisClamper : MonoBehaviour
+    public class AxisClamper : PhysicsObject
     {
-        [SerializeField]
-        private Rigidbody rigidbody;
         [SerializeField]
         private float value;
 

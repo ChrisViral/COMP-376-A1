@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Runtime.CompilerServices;
+using UnityEngine;
 
 namespace A1
 {
-    public class RandomRotation : MonoBehaviour
+    public class RandomRotation : PhysicsObject
     {
-        [SerializeField]
-        private Rigidbody rigidbody;
         [SerializeField]
         private float maxRotation;
 

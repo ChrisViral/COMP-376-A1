@@ -2,10 +2,8 @@
 
 namespace A1
 {
-    public class StraightMovement : MonoBehaviour
+    public class StraightMovement : PhysicsObject
     {
-        [SerializeField]
-        private Rigidbody rigidbody;
         [SerializeField]
         private float speed;
 
