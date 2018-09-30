@@ -1,13 +1,16 @@
 ﻿using UnityEngine;
 
-namespace A1
+namespace SpaceShooter
 {
+    /// <summary>
+    /// Game boundaries limiter
+    /// </summary>
     [RequireComponent(typeof(Collider))]
     public class GameBoundary : MonoBehaviour
     {
-        private void OnTriggerExit(Collider other)
-        {
-            Destroy(other.gameObject);
-        }
+        #region Functions
+        //If the object exits the boundary, destroy it
+        private void OnTriggerExit(Collider other) => Destroy(other.gameObject);
+        #endregion
     }
 }

@@ -8,7 +8,7 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <RootNamespace>A1</RootNamespace>
+    <RootNamespace>SpaceShooter</RootNamespace>
     <ProjectGuid>{C117D231-FAE1-C71A-5644-7E64B0A60E1E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
