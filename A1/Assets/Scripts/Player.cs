@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Physics;
+using UnityEngine;
 
 namespace SpaceShooter
 {
@@ -39,7 +40,7 @@ namespace SpaceShooter
             Instantiate(this.explosion, this.transform.position, Quaternion.identity);
 
             //Notify for the game to end
-            GameLogic.Instance.EndGame();
+            GameLogic.CurrentGame.EndGame();
         }
         #endregion
 

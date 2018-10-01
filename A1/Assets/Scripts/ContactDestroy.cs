@@ -9,6 +9,7 @@ namespace SpaceShooter
     public class ContactDestroy : MonoBehaviour
     {
         #region Fields
+        //Inspector fields
         [SerializeField]
         private int points;
         [SerializeField]
@@ -29,7 +30,7 @@ namespace SpaceShooter
                         Destroy(this.gameObject);
                         Destroy(other.gameObject);
                         Instantiate(this.explosion, this.transform.position, Quaternion.identity);
-                        GameLogic.Instance.UpdateScore(this.points);
+                        GameLogic.CurrentGame.UpdateScore(this.points);
                         break;
                     
                     //If player, kill player

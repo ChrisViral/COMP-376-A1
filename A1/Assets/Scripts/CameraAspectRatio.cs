@@ -9,6 +9,7 @@ namespace SpaceShooter
     public class CameraAspectRatio : MonoBehaviour
     {
         #region Fields
+        //Inspector fields
         [SerializeField]
         private float aspectRatio;
         #endregion

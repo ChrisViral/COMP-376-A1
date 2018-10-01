@@ -10,6 +10,7 @@ namespace SpaceShooter
     public struct Bounds
     {
         #region Fields
+        //Inspector fields
         [SerializeField]
         private float xMin, xMax;   //X axis bounds
         [SerializeField]
