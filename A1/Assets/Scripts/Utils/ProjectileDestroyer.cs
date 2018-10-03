@@ -1,19 +1,15 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Players;
+using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
-    [RequireComponent(typeof(AudioSource))]
-    public class ProjectileDestroyer : MonoBehaviour
+    /// <summary>
+    /// Player projectile destroyer
+    /// </summary>
+    [DisallowMultipleComponent]
+    public class ProjectileDestroyer : AudioObject
     {
-        [SerializeField]
-        private AudioClip sound;
-        [SerializeField]
-        private float volume;
-
-        private AudioSource source;
-
-        private void Awake() => this.source = this.gameObject.GetComponent<AudioSource>();
-
+        #region Functions
         private void OnTriggerEnter(Collider other)
         {
             //Figure out the object's tag
@@ -21,8 +17,7 @@ namespace SpaceShooter
             {
                 //If a projectile, destroy both objects and trigger explosion particles
                 case "Projectile":
-                    Destroy(other.gameObject);
-                    this.source.PlayOneShot(this.sound, this.volume);
+                    if (other.GetComponent<Bolt>().Active) { PlayClip(); }
                     break;
                     
                 //If player, kill player
@@ -31,5 +26,6 @@ namespace SpaceShooter
                     break;
             }
         }
+        #endregion
     }
 }

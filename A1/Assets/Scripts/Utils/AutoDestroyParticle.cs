@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
     /// <summary>
     /// Particle auto destroyer
     /// </summary>
-    [RequireComponent(typeof(ParticleSystem))]
+    [DisallowMultipleComponent, RequireComponent(typeof(ParticleSystem)), AddComponentMenu("Effects/Auto Particle Destroyer")]
     public class AutoDestroyParticle : MonoBehaviour
     {
         #region Functions

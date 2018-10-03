@@ -1,9 +1,12 @@
 ﻿using System.Collections.Generic;
+using SpaceShooter.Physics;
+using SpaceShooter.Players;
+using SpaceShooter.UI;
 using SpaceShooter.Waves;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SpaceShooter
+namespace SpaceShooter.Scenes
 {
     /// <summary>
     /// Gameplay flow controller
@@ -13,20 +16,39 @@ namespace SpaceShooter
     {
         #region Fields
         //Inspector fields
+        [SerializeField, Header("Gameplay")]
+        private Player player;
         [SerializeField]
-        private Text scoreLabel, restartLabel, gameoverLabel;
+        private BackgroundMover background;
         [SerializeField]
-        private GameObject asteroids;
+        private FadeGraphics fadeToBlack, bossFade;
         [SerializeField]
-        private GameObject[] enemies;
+        private float endGameWait;
+        [SerializeField, Header("UI")]
+        private Text scoreLabel;
         [SerializeField]
-        private GameObject powerup, boss;
-        [SerializeField]
-        private Vector3 spawn, bossSpawn;
-        [SerializeField]
+        private Text restartLabel, gameoverLabel;
+        [SerializeField, Header("Enemy waves")]
         private int waves;
+        [SerializeField, Tooltip("Asteroid spawner")]
+        private GameObject asteroids;
+        [SerializeField, Tooltip("Enemy spawners")]
+        private GameObject[] enemies;
+        [SerializeField, Header("Powerup")]
+        private GameObject powerup;
+        [SerializeField]
+        private Vector3 powerupSpawn;
+        [SerializeField, Header("Boss fight")]
+        private GameObject boss;
+        [SerializeField]
+        private Vector3 bossSpawn;
+        [SerializeField]
+        private float bossDelay;
+        [SerializeField, Tooltip("Boss health bar")]
+        internal Progressbar bossProgressbar;
 
         //Private fields
+        private GameMode mode;
         private int score;
         private bool gameEnded, bossFight;
         private WaveController asteroidController, enemyController;
@@ -53,13 +75,51 @@ namespace SpaceShooter
             this.asteroidController.StopWave();
             this.enemyController.StopWave();
 
-            //Activate endgame text labels
+            //Start the transition Coroutine
+            StartCoroutine(won ? WinTransition() : LoseTransition());
+        }
+
+        /// <summary>
+        /// Winning endgame coroutine
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator<YieldInstruction> WinTransition()
+        {
+            //Wait for the endgame
+            yield return new WaitForSeconds(this.endGameWait);
+
+            //Update UI
             this.gameoverLabel.gameObject.SetActive(true);
+            this.gameoverLabel.text = "Congratulations!";
             this.restartLabel.text += "\nPress R to restart...";
 
-            if (won)
+            //Fade out screen
+            this.background.StartMovement(BackgroundMover.MovementMode.ACCELERATE);
+            this.fadeToBlack.Fade();
+        }
+
+        /// <summary>
+        /// Losing endgame coroutine
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator<YieldInstruction> LoseTransition()
+        {
+            //Stop spawners
+            this.asteroidController.StopWave();
+            this.enemyController.StopWave();
+
+            //Update UI and fade
+            this.gameoverLabel.gameObject.SetActive(true);
+            this.restartLabel.text += "\nPress R to restart...";
+            this.fadeToBlack.Fade(true);
+            this.bossFade.Fade(true);
+            yield return new WaitForSeconds(this.fadeToBlack.FadeTime / 2f);
+
+            //Destroy the boss if it exists after the transition
+            Boss b = FindObjectOfType<Boss>();
+            if (b != null)
             {
-                this.gameoverLabel.text = "Congratulations!";
+                Destroy(b.gameObject);
             }
         }
 
@@ -76,13 +136,17 @@ namespace SpaceShooter
             else { StartCoroutine(StartBossFight()); }
         }
 
+        /// <summary>
+        /// Stops incoming waves and starts the boss fight
+        /// </summary>
         private IEnumerator<YieldInstruction> StartBossFight()
         {
             this.bossFight = true;
             this.asteroidController.StopWave();
             Destroy(this.asteroidController.gameObject);
-            yield return new WaitForSeconds(5f);
-
+            yield return new WaitForSeconds(this.bossDelay);
+            
+            this.bossFade.Fade();
             Instantiate(this.boss, this.bossSpawn, Quaternion.identity);
         }
 
@@ -92,13 +156,22 @@ namespace SpaceShooter
         public void WaveDestroyed()
         {
             this.score *= 2;
-            Instantiate(this.powerup, this.spawn, Quaternion.identity);
+
+            if (this.player.Level < Player.MAX_LEVEL)
+            {
+                Instantiate(this.powerup, this.powerupSpawn, Quaternion.identity);
+                Debug.Log("A powerup has been created!");
+            }
         }
         #endregion
 
         #region Functions
+        //Get current Game Mode
+        private void Awake() => this.mode = GameLogic.GameMode;
+
         private void Start()
         {
+            this.background.StartMovement(BackgroundMover.MovementMode.APPROACH);
             this.asteroidController = Instantiate(this.asteroids).GetComponent<AsteroidWaveController>();
             this.asteroidController.StartWave();
             StartRandomController();

@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
+using Bounds = SpaceShooter.Utils.Bounds;
 
-namespace SpaceShooter
+namespace SpaceShooter.Players
 {
     /// <summary>
     /// Player object
@@ -10,6 +11,10 @@ namespace SpaceShooter
     {
         #region Constants
         /// <summary>
+        /// Max player level
+        /// </summary>
+        public const int MAX_LEVEL = 2;
+        /// <summary>
         /// Life off alpha value
         /// </summary>
         private const float OFF = 0.25f;
@@ -17,16 +22,16 @@ namespace SpaceShooter
 
         #region Fields
         //Inspector fields
-        [SerializeField]
-        private Bounds gameLimits;
-        [SerializeField]
-        private AudioClip powerupSound;
-        [SerializeField]
-        private float powerupVolume;
+        [SerializeField, Header("Player")]
+        private Bounds gameLimits; 
         [SerializeField]
         private Shield shield;
         [SerializeField]
         private Graphic[] lives;
+        [SerializeField, Header("Powerup")]
+        private AudioClip powerupSound;
+        [SerializeField]
+        private float powerupVolume;
         #endregion
 
         #region Properties
@@ -45,6 +50,7 @@ namespace SpaceShooter
         {
             if (this.Level < 2)
             {
+                this.source.PlayOneShot(this.powerupSound, this.powerupVolume);
                 this.lives[++this.Level].CrossFadeAlpha(1f, 0f, true);
             }
             return this.Level;
@@ -147,19 +153,10 @@ namespace SpaceShooter
 
         private void OnTriggerEnter(Collider other)
         {
-            switch (other.tag)
+            //If the shield is inactive and hit by an enemy, damage player
+            if (!this.shield.Active && other.CompareTag("Projectile_Enemy"))
             {
-                //Die when hit by an enemy projectile
-                case "Projectile_Enemy":
-                    if (!this.shield.Active) { Die(); }
-                    break;
-                
-                //Catch powerup
-                case "Powerup":
-                    Destroy(other.gameObject);
-                    this.source.PlayOneShot(this.powerupSound, this.powerupVolume);
-                    IncrementLevel();
-                    break;
+                Die();
             }
         }
         #endregion

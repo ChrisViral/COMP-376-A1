@@ -1,16 +1,16 @@
 ﻿using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
     /// <summary>
     /// Scrolls a background texture smoothly over time
     /// </summary>
-    [RequireComponent(typeof(Renderer))]
+    [DisallowMultipleComponent, RequireComponent(typeof(Renderer)), AddComponentMenu("Rendering/BackgroundScroller")]
     public class BackgroundScroller : MonoBehaviour
     {
         #region Fields
         //Inspector fields
-        [SerializeField]
+        [SerializeField, Tooltip("Scroll speed")]
         private float speed;
 
         //Private fields

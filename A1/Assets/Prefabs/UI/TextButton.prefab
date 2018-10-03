@@ -38,8 +38,8 @@ GameObject:
   - component: {fileID: 224473382757436946}
   - component: {fileID: 222752096920450680}
   - component: {fileID: 114063672278672714}
-  - component: {fileID: 82066692116526376}
   - component: {fileID: 114755529732034422}
+  - component: {fileID: 82066692116526376}
   m_Layer: 5
   m_Name: TextButton
   m_TagString: Untagged
@@ -181,8 +181,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_MethodName: OnStart
+      - m_Target: {fileID: 114755529732034422}
+        m_MethodName: PlayClip
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -235,7 +235,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1271224045683162}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 79ce7e6bf3d34f04bac1cce01ca31054, type: 3}
+  m_Script: {fileID: 11500000, guid: 435684e2e81203d49bb203bbf8a918ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   clip: {fileID: 8300000, guid: aaeebbd1ab08f9041bca5cc82f106c70, type: 3}

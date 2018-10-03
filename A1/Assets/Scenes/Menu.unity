@@ -778,7 +778,7 @@ Prefab:
     - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
         type: 2}
       propertyPath: m_Interactable
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114569220490480158, guid: 14ea66a9f24700a48a004fcbce330e8f,
         type: 2}
@@ -801,6 +801,41 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1069654461310352, guid: 14ea66a9f24700a48a004fcbce330e8f, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_DisabledColor.r
+      value: 0.254717
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_DisabledColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_DisabledColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.r
+      value: 0.25490198
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_NormalColor.b
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114063672278672714, guid: 14ea66a9f24700a48a004fcbce330e8f,
+        type: 2}
+      propertyPath: m_Colors.m_DisabledColor.a
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1675,7 +1710,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeButtons: {fileID: 1559856080}
-  fadePanel: {fileID: 1453044518}
   fadeDifficulty: {fileID: 1473147196}
   helpText: {fileID: 1836580346}
 --- !u!224 &1661878950

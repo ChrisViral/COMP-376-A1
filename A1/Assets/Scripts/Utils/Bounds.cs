@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
     /// <summary>
     /// 2D rectangular boundaries limiter
@@ -11,10 +11,14 @@ namespace SpaceShooter
     {
         #region Fields
         //Inspector fields
+        [SerializeField, Header("X axis bounds")]
+        private float xMin;
         [SerializeField]
-        private float xMin, xMax;   //X axis bounds
+        private float xMax;
+        [SerializeField, Header("Z axis bounds")]
+        private float zMin;
         [SerializeField]
-        private float zMin, zMax;   //Z axis bounds
+        private float zMax;
         #endregion
 
         #region Methods

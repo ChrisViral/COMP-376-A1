@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95a4ea328e0102e43831734234379baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 5
+  delay: 7
   spawn: {x: 0, y: 0, z: 17}
   enemy: {fileID: 1646578850731952, guid: c348e733a6fe3e74790b1ab94154339e, type: 2}
   interval: 0.5

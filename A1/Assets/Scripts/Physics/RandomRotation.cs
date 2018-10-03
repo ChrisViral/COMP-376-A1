@@ -5,6 +5,7 @@ namespace SpaceShooter.Physics
     /// <summary>
     /// Gives an object a random rotation upon load
     /// </summary>
+    [DisallowMultipleComponent, AddComponentMenu("Physics/Random Rotation")]
     public class RandomRotation : PhysicsObject
     {
         #region Fields

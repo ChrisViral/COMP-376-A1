@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Utils;
+using UnityEngine;
 
 namespace SpaceShooter.Waves
 {
@@ -15,8 +16,6 @@ namespace SpaceShooter.Waves
         /// Amount of objects this listener watches
         /// </summary>
         public int Count { get; internal set; }
-
-        public bool Active { get; set; }
         #endregion
 
         #region Methods
@@ -40,21 +39,13 @@ namespace SpaceShooter.Waves
         /// <summary>
         /// Call this to indicate a part of the wave has been destroyed
         /// </summary>
-        public void OnDestroyed() => this.destroyed++;
-        #endregion
-
-        #region Functions
-        private void Update()
+        public void OnDestroyed()
         {
-            if (!this.Active) { return; }
-
-            //When all objects have been destroyed
-            if (this.destroyed == this.Count)
+            if (++this.destroyed == this.Count)
             {
                 //If they have also all been killed, send a completion message
                 if (this.killed == this.Count)
                 {
-                    this.Active = false;
                     GameLogic.CurrentGame.WaveDestroyed();
                 }
 

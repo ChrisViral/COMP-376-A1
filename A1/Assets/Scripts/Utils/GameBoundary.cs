@@ -5,7 +5,7 @@ namespace SpaceShooter
     /// <summary>
     /// Game boundaries limiter
     /// </summary>
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider)), AddComponentMenu("Physics/Boundary")]
     public class GameBoundary : MonoBehaviour
     {
         #region Functions

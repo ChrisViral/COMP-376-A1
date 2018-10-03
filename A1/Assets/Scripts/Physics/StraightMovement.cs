@@ -5,6 +5,7 @@ namespace SpaceShooter.Physics
     /// <summary>
     /// Gives an object a constant forward motion upon load
     /// </summary>
+    [DisallowMultipleComponent, AddComponentMenu("Physics/Straight Movement")]
     public class StraightMovement : PhysicsObject
     {
         #region Fields

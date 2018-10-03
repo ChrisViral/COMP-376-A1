@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using SpaceShooter.Scenes;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -11,6 +12,15 @@ namespace SpaceShooter
     {
         MENU = 0,
         GAME = 1
+    }
+
+    /// <summary>
+    /// Game difficulties
+    /// </summary>
+    public enum GameMode
+    {
+        NORMAL,
+        HARD
     }
 
     /// <summary>
@@ -33,6 +43,11 @@ namespace SpaceShooter
         public static GameScenes CurrentScene { get; private set; }
 
         /// <summary>
+        /// Curent GameMode
+        /// </summary>
+        public static GameMode GameMode { get; internal set; }
+
+        /// <summary>
         /// Current ongoing Game
         /// </summary>
         public static Game CurrentGame { get; private set; }
@@ -40,8 +55,10 @@ namespace SpaceShooter
 
         #region Fields
         //Inspector fields
+        [SerializeField, Header("Music")]
+        private AudioClip menuMusic;
         [SerializeField]
-        private AudioClip menuMusic, gameMusic;
+        private AudioClip gameMusic;
 
         //Private fields
         private AudioSource source;
@@ -110,7 +127,6 @@ namespace SpaceShooter
             }
 
             //Setup GameLogic instance
-            Debug.Log("GameLogic created");
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;

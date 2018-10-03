@@ -36,29 +36,13 @@ GameObject:
   - component: {fileID: 4538240230605656}
   - component: {fileID: 54274534578285078}
   - component: {fileID: 65387490793347670}
+  - component: {fileID: 114789702358508754}
   - component: {fileID: 114113416208554996}
   - component: {fileID: 114512801178429872}
   - component: {fileID: 82260467454561944}
-  - component: {fileID: 114789702358508754}
-  - component: {fileID: 114244021715207694}
   m_Layer: 0
   m_Name: Enemy_Purple
   m_TagString: Enemy
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!1 &1389428515106788
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4347123020929856}
-  m_Layer: 0
-  m_Name: Engine
-  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -82,7 +66,7 @@ GameObject:
   m_IsActive: 1
 --- !u!1 &1732604917987056
 GameObject:
-  m_ObjectHideFlags: 1
+  m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 6
@@ -91,26 +75,12 @@ GameObject:
   - component: {fileID: 198748364540855024}
   - component: {fileID: 199436402417166530}
   m_Layer: 0
-  m_Name: Core
+  m_Name: Engine
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4347123020929856
-Transform:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1389428515106788}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.225}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 4678527891111670}
-  m_Father: {fileID: 4538240230605656}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4476978469989792
 Transform:
   m_ObjectHideFlags: 1
@@ -136,7 +106,7 @@ Transform:
   m_Children:
   - {fileID: 4476978469989792}
   - {fileID: 4826197528551436}
-  - {fileID: 4347123020929856}
+  - {fileID: 4678527891111670}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -146,12 +116,12 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732604917987056}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0.22499976}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 4347123020929856}
-  m_RootOrder: 0
+  m_Father: {fileID: 4538240230605656}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4826197528551436
 Transform:
@@ -222,7 +192,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 0
+  m_Constraints: 36
   m_CollisionDetection: 0
 --- !u!65 &65387490793347670
 BoxCollider:
@@ -344,19 +314,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   points: 200
   explosion: {fileID: 100012, guid: 384371afbb4354cc9a3fc68eab303756, type: 2}
---- !u!114 &114244021715207694
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1262742140128322}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f0857bb2b9b49958eacd3774d1d0a49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  peakAcceleration: 5
-  period: 1
 --- !u!114 &114512801178429872
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -370,14 +327,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 5
   tilt: 2.5
-  fireRate: 2
-  gun: {fileID: 4476978469989792}
-  bolt: {fileID: 1309078589653372, guid: 159e3a4aa30f86c4892126ad7a181e5b, type: 2}
   explosion: {fileID: 100012, guid: 384371afbb4354cc9a3fc68eab303756, type: 2}
+  bolt: {fileID: 1309078589653372, guid: 159e3a4aa30f86c4892126ad7a181e5b, type: 2}
   boltSound: {fileID: 8300000, guid: 1be4472894949437694aead55c6da60f, type: 3}
   shotVolume: 0.5
+  fireRate: 2
+  gun: {fileID: 4476978469989792}
   canShoot: 1
-  delay: 1
+  minDelay: 0.5
+  maxDelay: 1.5
 --- !u!114 &114789702358508754
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -389,7 +347,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f1ebad08ad2a2342830e2b35f3327a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: -5
+  speed: -3
 --- !u!198 &198748364540855024
 ParticleSystem:
   m_ObjectHideFlags: 1

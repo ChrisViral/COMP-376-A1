@@ -39,6 +39,7 @@ GameObject:
   - component: {fileID: 54667144514032960}
   - component: {fileID: 136917128038355802}
   - component: {fileID: 114145000014882858}
+  - component: {fileID: 114490827563183008}
   m_Layer: 0
   m_Name: Bolt
   m_TagString: Projectile
@@ -142,6 +143,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 20
+--- !u!114 &114490827563183008
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1800761522205330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0941ae69a38a3546ad97bffc7091a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!136 &136917128038355802
 CapsuleCollider:
   m_ObjectHideFlags: 1

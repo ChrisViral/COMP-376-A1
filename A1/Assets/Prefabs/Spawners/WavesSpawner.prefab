@@ -49,15 +49,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 1756775544014276}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 34e5c287b88a5f1458d51e09f6da7946, type: 3}
+  m_Script: {fileID: 11500000, guid: c3b7c26f6035a6a42b7e012f93b2c362, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 5
+  delay: 6
   spawn: {x: -6, y: 0, z: 17}
   enemy: {fileID: 1262742140128322, guid: 4b851cf887baec944bec3657b3c17c56, type: 2}
   interval: 0.5
-  count: 5
   listener: {fileID: 114875222190230210}
+  count: 5
 --- !u!114 &114875222190230210
 MonoBehaviour:
   m_ObjectHideFlags: 1

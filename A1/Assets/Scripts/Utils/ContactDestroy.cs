@@ -1,12 +1,13 @@
-﻿using SpaceShooter.Waves;
+﻿using SpaceShooter.Players;
+using SpaceShooter.Waves;
 using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
     /// <summary>
     /// Contact destructor object
     /// </summary>
-    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Collider)), AddComponentMenu("Physics/Contact Destroyer")]
     public class ContactDestroy : MonoBehaviour
     {
         #region Fields
@@ -30,8 +31,12 @@ namespace SpaceShooter
         #endregion
 
         #region Methods
+        /// <summary>
+        /// Explodes this object
+        /// </summary>
         public void Explode()
         {
+            //Destroy and spawn explosion if not already exploded
             if (!this.IsExploded)
             {
                 Destroy(this.gameObject);
@@ -52,10 +57,12 @@ namespace SpaceShooter
             {
                 //If a projectile, destroy both objects and trigger explosion particles
                 case "Projectile":
-                    Explode();
-                    Destroy(other.gameObject);
-                    GameLogic.CurrentGame.UpdateScore(this.points);
-                    if (this.Listener != null) { this.Listener.OnKilled(); }
+                    if (other.GetComponent<Bolt>().Active)
+                    {
+                        Explode();
+                        GameLogic.CurrentGame.UpdateScore(this.points);
+                        if (this.Listener != null) { this.Listener.OnKilled(); }
+                    }
                     break;
                     
                 //If player, kill player

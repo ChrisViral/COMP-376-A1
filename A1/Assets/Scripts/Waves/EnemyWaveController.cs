@@ -6,46 +6,66 @@ namespace SpaceShooter.Waves
     /// <summary>
     /// Sinusoidal movement enemy wave generator
     /// </summary>
-    public class EnemyWaveController : WaveController
+    public abstract class EnemyWaveController : WaveController
     {
         #region Fields
         //Inspector fields
         [SerializeField]
-        private GameObject enemy;
+        protected GameObject enemy;
         [SerializeField]
-        private float interval;
+        protected float interval;
         [SerializeField]
-        private int count;
-        [SerializeField]
-        private WaveListener listener;
+        protected WaveListener listener;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// Amount of enemies in the wave
+        /// </summary>
+        public abstract int Count { get; }
         #endregion
         
         #region Methods
         /// <summary>
-        /// Spawns the Sinusoidal enemy wave
+        /// Spawns one enemy at the default spawn location
+        /// </summary>
+        /// <returns>The created GameObject</returns>
+        protected GameObject SpawnEnemy() => SpawnEnemy(this.spawn);
+
+        /// <summary>
+        /// Spawns one enemy at a given spawn location
+        /// </summary>
+        /// <param name="position">Spawn position</param>
+        /// <returns>The created GameObject</returns>
+        protected GameObject SpawnEnemy(Vector3 position) => this.listener.AttachListener(Instantiate(this.enemy, position, Quaternion.identity));
+
+        /// <summary>
+        /// Spawns the enemy waves
         /// </summary>
         protected override IEnumerator<YieldInstruction> SpawnWave()
         {
             //Setup listener
-            this.listener.Active = true;
-            this.listener.Count = this.count;
+            this.listener.Count = this.Count;
 
             //First wave delay
             yield return new WaitForSeconds(this.delay);
 
-            //Spawn first enemy
-            this.listener.AttachListener(Instantiate(this.enemy, this.spawn, Quaternion.identity));
-
-            //Spawn wave
-            for (int i = 1; i < this.count; i++)
+            //Cycle through the implemented coroutine
+            using (IEnumerator<YieldInstruction> spawner = Spawner())
             {
-                //Wait a before spawning next enemy
-                yield return new WaitForSeconds(this.interval);
-
-                //Spawn enemy
-                this.listener.AttachListener(Instantiate(this.enemy, this.spawn, Quaternion.identity));
+                while (spawner.MoveNext())
+                {
+                    yield return spawner.Current;
+                }
             }
         }
+        #endregion
+
+        #region Abstract methods
+        /// <summary>
+        /// Spawns the enemy in succession
+        /// </summary>
+        protected abstract IEnumerator<YieldInstruction> Spawner();
         #endregion
     }
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace SpaceShooter.UI
@@ -7,21 +6,24 @@ namespace SpaceShooter.UI
     /// <summary>
     /// Fades a collection of UI elements in and out of view
     /// </summary>
+    [AddComponentMenu("UI/Fade Graphics")]
     public class FadeGraphics : MonoBehaviour
     {
         #region Fields
         //Inspector fields
         [SerializeField]
-        internal List<Graphic> graphics;
+        internal Graphic[] graphics;
         [SerializeField]
-        private List<Selectable> selectables;
-        [SerializeField]
-        private float fadeTime, fadeTo;
+        private Selectable[] selectables;
+        [SerializeField, Header("Fading")]
+        private float fadeTime;
+        [SerializeField, Tooltip("Alpha value to fade to")]
+        private float fadeTo;
         [SerializeField]
         private bool faded;
 
         //Private fields
-        private List<float> original;
+        private float[] original;
         #endregion
 
         #region Properties
@@ -40,14 +42,17 @@ namespace SpaceShooter.UI
         /// <summary>
         /// Toggles the fade of the group
         /// </summary>
-        public void Fade()
+        public void Fade(bool fast = false)
         {
+            float time = this.fadeTime;
+            if (fast) { time /= 2f; }
+
             if (this.faded)
             {
                 //Restore all graphics to their original alpha values
-                for (int i = 0; i < this.graphics.Count; i++)
+                for (int i = 0; i < this.graphics.Length; i++)
                 {
-                    this.graphics[i].CrossFadeAlpha(this.original[i], this.fadeTime, true);
+                    this.graphics[i].CrossFadeAlpha(this.original[i], time, true);
                 }
 
                 this.faded = false;
@@ -57,7 +62,7 @@ namespace SpaceShooter.UI
                 //Fade all graphics out of view
                 foreach (Graphic g in this.graphics)
                 {
-                    g.CrossFadeAlpha(this.fadeTo, this.fadeTime, true);
+                    g.CrossFadeAlpha(this.fadeTo, time, true);
                 }
 
                 this.faded = true;
@@ -103,10 +108,10 @@ namespace SpaceShooter.UI
         private void Start()
         {
             //Get original alpha values for restoration
-            this.original = new List<float>(this.graphics.Count);
-            foreach (Graphic g in this.graphics)
+            this.original = new float[this.graphics.Length];
+            for (int i = 0; i < this.original.Length; i++)
             {
-                this.original.Add(g.color.a);
+                this.original[i] = this.graphics[i].color.a;
             }
 
             //Fade all graphics out of view if originally faded

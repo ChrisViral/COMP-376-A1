@@ -3,7 +3,7 @@ using SpaceShooter.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace SpaceShooter
+namespace SpaceShooter.Scenes
 {
     /// <summary>
     /// Menu flow controller
@@ -14,7 +14,7 @@ namespace SpaceShooter
         #region Fields
         //Inspector fields
         [SerializeField]
-        private FadeGraphics fadeButtons, fadePanel, fadeDifficulty;
+        private FadeGraphics fadeButtons, fadeDifficulty;
         [SerializeField]
         private Text helpText;
         #endregion
@@ -39,7 +39,7 @@ namespace SpaceShooter
             this.fadeButtons.Fade();
             this.fadeDifficulty.Fade();
             yield return new WaitForSeconds(Mathf.Max(this.fadeButtons.FadeTime, this.fadeDifficulty.FadeTime));
-            
+
             //Toggle new objects
             this.fadeButtons.ToggleGameObjects();
             this.fadeDifficulty.ToggleSelectables();
@@ -85,14 +85,18 @@ namespace SpaceShooter
         /// <summary>
         /// Normal mode button event
         /// </summary>
-        public void OnNormalMode() => GameLogic.LoadScene(GameScenes.GAME);
+        public void OnNormalMode()
+        {
+            GameLogic.GameMode = GameMode.NORMAL;
+            GameLogic.LoadScene(GameScenes.GAME);
+        }
 
         /// <summary>
         /// Hard mode button event
         /// </summary>
         public void OnHardMode()
         {
-            //TODO: Start Bullet Hell mode instead
+            GameLogic.GameMode = GameMode.HARD;
             GameLogic.LoadScene(GameScenes.GAME);
         }
 

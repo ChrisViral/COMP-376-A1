@@ -12,7 +12,7 @@ namespace SpaceShooter.Waves
         //Inspector fields
         [SerializeField]
         private GameObject[] asteroids;
-        [SerializeField]
+        [SerializeField, Tooltip("Max amount of asteroids spawned at once")]
         private int max;
         [SerializeField]
         private Vector2 spawnTimeRange;
@@ -41,6 +41,5 @@ namespace SpaceShooter.Waves
             }
         }
         #endregion
-
     }
 }

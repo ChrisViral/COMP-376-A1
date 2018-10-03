@@ -1,23 +1,21 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Utils;
+using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Players
 {
     /// <summary>
     /// Ship shield
     /// </summary>
-    [RequireComponent(typeof(Renderer), typeof(Collider), typeof(AudioSource))]
-    public class Shield : MonoBehaviour
+    [RequireComponent(typeof(Renderer), typeof(Collider))]
+    public class Shield : AudioObject
     {
         #region Fields
         //Inspector fields
         [SerializeField]
-        private AudioClip sound;
-        [SerializeField]
-        private float volume, duration;
+        private float duration;
 
         //Private fields
         private Material material;
-        private AudioSource source;
         private float timeLeft, baseAlpha;
         #endregion
 
@@ -48,19 +46,17 @@ namespace SpaceShooter
         {
             this.Active = true;
             this.timeLeft = this.duration;
-            this.source.PlayOneShot(this.sound, this.volume);
+            PlayClip();
             SetAlpha(this.baseAlpha);
         }
+
+        /// <summary>
+        /// Awake function
+        /// </summary>
+        protected override void OnAwake() => this.material = this.gameObject.GetComponent<Renderer>().material;
         #endregion
 
         #region Functions
-        private void Awake()
-        {
-            //Get the required components
-            this.material = this.gameObject.GetComponent<Renderer>().material;
-            this.source = this.gameObject.GetComponent<AudioSource>();
-        }
-        
         private void Start()
         {
             //Turn shield off at start
@@ -95,13 +91,13 @@ namespace SpaceShooter
                     //Kill enemies
                     case "Enemy":
                         other.gameObject.GetComponent<ContactDestroy>()?.Explode();
-                        this.source.PlayOneShot(this.sound, this.volume);
+                        PlayClip();
                         break;
 
                     //Destroy projectiles
                     case "Projectile_Enemy":
                         Destroy(other.gameObject);
-                        this.source.PlayOneShot(this.sound, this.volume);
+                        PlayClip();
                         break;
                 }
             }

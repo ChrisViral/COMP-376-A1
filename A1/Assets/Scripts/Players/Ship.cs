@@ -1,7 +1,7 @@
 ﻿using SpaceShooter.Physics;
 using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Players
 {
     /// <summary>
     /// Ship base class
@@ -11,18 +11,21 @@ namespace SpaceShooter
     {
         #region Fields
         //Inspector fields
+        [SerializeField, Header("Movement")]
+        protected float speed;
         [SerializeField]
-        protected float speed, tilt, fireRate;
+        protected float tilt;
         [SerializeField]
-        protected Transform gun;
-        [SerializeField]
-        protected GameObject bolt, explosion;
+        protected GameObject explosion;
+        [SerializeField, Header("Fire")]
+        protected GameObject bolt;
         [SerializeField]
         protected AudioClip boltSound;
         [SerializeField]
-        protected float shotVolume;
+        protected float shotVolume, fireRate;
         [SerializeField]
-        protected bool canShoot = true;
+        protected Transform gun;
+        public bool canShoot = true;
         
         //Private fields
         protected AudioSource source;

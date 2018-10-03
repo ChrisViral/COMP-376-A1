@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-namespace SpaceShooter
+namespace SpaceShooter.Utils
 {
     /// <summary>
     /// Restricts the field of view of a Camera to the given aspect ratio
     /// </summary>
-    [RequireComponent(typeof(Camera))]
+    [DisallowMultipleComponent, RequireComponent(typeof(Camera)), AddComponentMenu("Camera/Aspect Ratio Limiter")]
     public class CameraAspectRatio : MonoBehaviour
     {
         #region Fields
@@ -19,15 +19,12 @@ namespace SpaceShooter
         {
             //Set camera aspect ratio as needed
             Camera cam = this.gameObject.GetComponent<Camera>();
-            float variance = this.aspectRatio / Camera.main.aspect;
-            if (variance < 1.0f)
-            {
-                cam.rect = new Rect((1.0f - variance) / 2.0f, 0f, variance, 1.0f);
-            }
+            float variance = this.aspectRatio / cam.aspect;
+            if (variance < 1f) { cam.rect = new Rect((1f - variance) / 2f, 0f, variance, 1f); }
             else
             {
-                variance = 1.0f / variance;
-                cam.rect = new Rect(0, (1.0f - variance) / 2.0f, 1.0f, variance);
+                variance = 1f / variance;
+                cam.rect = new Rect(0, (1f - variance) / 2f, 1f, variance);
             }
         }
         #endregion
