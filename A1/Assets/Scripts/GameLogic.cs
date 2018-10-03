@@ -16,7 +16,7 @@ namespace SpaceShooter
     /// <summary>
     /// Game logic controller
     /// </summary>
-    [DisallowMultipleComponent]
+    [DisallowMultipleComponent, RequireComponent(typeof(AudioSource))]
     public class GameLogic : MonoBehaviour
     {
         #region Instance
@@ -38,16 +38,21 @@ namespace SpaceShooter
         public static Game CurrentGame { get; private set; }
         #endregion
 
+        #region Fields
+        //Inspector fields
+        [SerializeField]
+        private AudioClip menuMusic, gameMusic;
+
+        //Private fields
+        private AudioSource source;
+        #endregion
+
         #region Static methods
         /// <summary>
         /// Loads a given scene
         /// </summary>
         /// <param name="scene">Scene to load</param>
-        internal static void LoadScene(GameScenes scene)
-        {
-            CurrentScene = scene;
-            SceneManager.LoadScene((int)scene);
-        }
+        internal static void LoadScene(GameScenes scene) => SceneManager.LoadScene((int)scene);
 
         /// <summary>
         /// Quits the game
@@ -61,28 +66,36 @@ namespace SpaceShooter
             Application.Quit();
 #endif
         }
+        #endregion
 
+        #region Methods
         /// <summary>
         /// Game scene loaded event
         /// </summary>
         /// <param name="scene">Loaded scene</param>
         /// <param name="mode">Load mode</param>
-        private static void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
-            CurrentScene = (GameScenes)scene.buildIndex;
-            Debug.Log($"Scene loaded: {CurrentScene}");
-
-            switch (CurrentScene)
+            GameScenes loadedScene = (GameScenes)scene.buildIndex;
+            switch (loadedScene)
             {
                     case GameScenes.MENU:
                         CurrentGame = null;
-                        //LoadScene(GameScenes.GAME);
+                        this.source.clip = this.menuMusic;
+                        this.source.Play();
                         break;
 
                     case GameScenes.GAME:
                         CurrentGame = FindObjectOfType<Game>();
+                        if (CurrentScene != GameScenes.GAME)
+                        {
+                            this.source.clip = this.gameMusic;
+                            this.source.Play();
+                        }
                         break;
             }
+            Debug.Log($"Scene loaded: {loadedScene}");
+            CurrentScene = loadedScene;
         }
         #endregion
 
@@ -101,6 +114,10 @@ namespace SpaceShooter
             Instance = this;
             DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
+
+            //Setup audio
+            this.source = this.gameObject.GetComponent<AudioSource>();
+            this.source.loop = true;
         }
         #endregion
     }

@@ -273,22 +273,6 @@ Prefab:
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 14ea66a9f24700a48a004fcbce330e8f, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &283321836 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1069654461310352, guid: 14ea66a9f24700a48a004fcbce330e8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 827306256}
---- !u!114 &283321839
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 283321836}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f18319f8252454a956eccbb7de9ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &298381966
 GameObject:
   m_ObjectHideFlags: 0
@@ -518,22 +502,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 484265664}
   m_Script: {fileID: 1392445389, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &553985527 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1069654461310352, guid: 14ea66a9f24700a48a004fcbce330e8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 484265664}
---- !u!114 &553985530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 553985527}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f18319f8252454a956eccbb7de9ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &716488375
 GameObject:
   m_ObjectHideFlags: 0
@@ -615,28 +583,12 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 273677949}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &797986045 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1069654461310352, guid: 14ea66a9f24700a48a004fcbce330e8f,
-    type: 2}
-  m_PrefabInternal: {fileID: 853924021}
 --- !u!114 &797986047 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114569220490480158, guid: 14ea66a9f24700a48a004fcbce330e8f,
     type: 2}
   m_PrefabInternal: {fileID: 853924021}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!114 &797986049
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 797986045}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 39f18319f8252454a956eccbb7de9ad7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &806459467
 GameObject:
   m_ObjectHideFlags: 0
@@ -1277,6 +1229,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 851e9782d40dd5a4e95722ca4b1c3aaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  menuMusic: {fileID: 8300000, guid: 970cb12d8061439429d2aae76aaa7758, type: 3}
+  gameMusic: {fileID: 8300000, guid: 39242cca74b0beb48838c18a15da568f, type: 3}
 --- !u!4 &1501911158
 Transform:
   m_ObjectHideFlags: 0
@@ -1299,7 +1253,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 7b04c59dd84f14039b601e1abbe7b884, type: 3}
+  m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 0.5
   m_Pitch: 1
@@ -1723,6 +1677,7 @@ MonoBehaviour:
   fadeButtons: {fileID: 1559856080}
   fadePanel: {fileID: 1453044518}
   fadeDifficulty: {fileID: 1473147196}
+  helpText: {fileID: 1836580346}
 --- !u!224 &1661878950
 RectTransform:
   m_ObjectHideFlags: 0

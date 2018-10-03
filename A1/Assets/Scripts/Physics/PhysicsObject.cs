@@ -16,8 +16,19 @@ namespace SpaceShooter.Physics
         #endregion
 
         #region Functions
-        ///Get Rigidbody from components
-        protected void Awake() => this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
+        private void Awake()
+        {
+            //Get Rigidbody from components
+            this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
+            OnAwake();
+        }
+        #endregion
+
+        #region Virtual Methods
+        /// <summary>
+        /// Is called alongside the PhysicsObject Awake() function, use to access the Awake function
+        /// </summary>
+        protected virtual void OnAwake() { }
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Waves;
+using UnityEngine;
 
 namespace SpaceShooter
 {
@@ -16,37 +17,58 @@ namespace SpaceShooter
         private GameObject explosion;
         #endregion
 
+        #region Properties
+        /// <summary>
+        /// The WaveListener this object is associated to
+        /// </summary>
+        public WaveListener Listener { get; internal set; }
+
+        /// <summary>
+        /// If this object has already exploded or not
+        /// </summary>
+        public bool IsExploded { get; private set; }
+        #endregion
+
+        #region Methods
+        public void Explode()
+        {
+            if (!this.IsExploded)
+            {
+                Destroy(this.gameObject);
+                if (this.explosion != null) { Instantiate(this.explosion, this.transform.position, Quaternion.identity); }
+                this.IsExploded = true;
+            }
+        }
+        #endregion
+
         #region Function
         private void OnTriggerEnter(Collider other)
         {
-            //Make sure the colliding object is not a game boundary
-            if (!other.CompareTag("Boundary"))
+            //Do not collide if exploded
+            if (this.IsExploded) { return; }
+            
+            //Figure out the object's tag
+            switch (other.tag)
             {
-                //Figure out the object's tag
-                switch (other.tag)
-                {
-                    //If a projectile, destroy both objects and trigger explosion particles
-                    case "Projectile":
-                        Destroy(this.gameObject);
-                        Destroy(other.gameObject);
-                        Instantiate(this.explosion, this.transform.position, Quaternion.identity);
-                        GameLogic.CurrentGame.UpdateScore(this.points);
-                        break;
+                //If a projectile, destroy both objects and trigger explosion particles
+                case "Projectile":
+                    Explode();
+                    Destroy(other.gameObject);
+                    GameLogic.CurrentGame.UpdateScore(this.points);
+                    if (this.Listener != null) { this.Listener.OnKilled(); }
+                    break;
                     
-                    //If player, kill player
-                    case "Player":
-                        other.GetComponent<Player>().Die();
-                        break;
-
-                    //If enemy, and current object a hazard, kill enemy
-                    case "Enemy":
-                        if (this.gameObject.CompareTag("Hazard"))
-                        {
-                            //Enemy.Die();
-                        }
-                        break;
-                }
+                //If player, kill player
+                case "Player":
+                    if (!other.GetComponent<Player>().Die()) { Explode(); }
+                    break;
             }
+        }
+
+        private void OnDestroy()
+        {
+            //Let the listener know the object has been destroyed if any is present
+            if (this.Listener != null) { this.Listener.OnDestroyed(); }
         }
         #endregion
     }

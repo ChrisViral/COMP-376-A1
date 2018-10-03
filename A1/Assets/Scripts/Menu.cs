@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SpaceShooter.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace SpaceShooter
 {
@@ -14,6 +15,8 @@ namespace SpaceShooter
         //Inspector fields
         [SerializeField]
         private FadeGraphics fadeButtons, fadePanel, fadeDifficulty;
+        [SerializeField]
+        private Text helpText;
         #endregion
 
         #region Methods
@@ -69,8 +72,9 @@ namespace SpaceShooter
         public void OnHelp()
         {
             //TODO: Implement help screen properly
-            this.fadeButtons.Fade();
-            this.fadePanel.Fade();
+            //this.fadeButtons.Fade();
+            //this.fadePanel.Fade();
+            this.helpText.text = "Git Gud.";
         }
 
         /// <summary>

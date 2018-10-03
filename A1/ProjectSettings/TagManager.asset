@@ -7,7 +7,9 @@ TagManager:
   - Enemy
   - Boundary
   - Projectile
-  - Hazard
+  - Projectile_Enemy
+  - Powerup
+  - Shield
   layers:
   - Default
   - TransparentFX

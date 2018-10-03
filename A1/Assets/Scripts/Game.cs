@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using SpaceShooter.Waves;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,20 +14,22 @@ namespace SpaceShooter
         #region Fields
         //Inspector fields
         [SerializeField]
-        private Vector3 spawn;
-        [SerializeField]
-        private GameObject[] asteroids;
-        [SerializeField]
-        private Vector2 spawnTimeRange;
-        [SerializeField]
-        private int maxSpawn, startWait;
-        [SerializeField]
         private Text scoreLabel, restartLabel, gameoverLabel;
+        [SerializeField]
+        private GameObject asteroids;
+        [SerializeField]
+        private GameObject[] enemies;
+        [SerializeField]
+        private GameObject powerup, boss;
+        [SerializeField]
+        private Vector3 spawn, bossSpawn;
+        [SerializeField]
+        private int waves;
 
         //Private fields
         private int score;
-        private bool gameEnded;
-        private Coroutine spawner;  //Asteroid spawner coroutine
+        private bool gameEnded, bossFight;
+        private WaveController asteroidController, enemyController;
         #endregion
 
         #region Methods
@@ -41,46 +44,64 @@ namespace SpaceShooter
         }
 
         /// <summary>
-        /// Asteroid spawning coroutine
+        /// Ends the game cycle
         /// </summary>
-        private IEnumerator<YieldInstruction> SpawnAsteroids()
+        public void EndGame(bool won = false)
         {
-            //First wave delay
-            yield return new WaitForSeconds(this.startWait);
+            //End game
+            this.gameEnded = true;
+            this.asteroidController.StopWave();
+            this.enemyController.StopWave();
 
-            //Spawn loop
-            while (true)
+            //Activate endgame text labels
+            this.gameoverLabel.gameObject.SetActive(true);
+            this.restartLabel.text += "\nPress R to restart...";
+
+            if (won)
             {
-                //Spawn wave
-                for (int i = 0, count = Random.Range(1, this.maxSpawn + 1); i < count; i++)
-                {
-                    Instantiate(this.asteroids[Random.Range(0, this.asteroids.Length)], new Vector3(Random.Range(this.spawn.x, this.spawn.y), 0f, this.spawn.z), Quaternion.identity);
-                }
-
-                //Wait a random amount of time before spawning next wave
-                yield return new WaitForSeconds(Random.Range(this.spawnTimeRange.x, this.spawnTimeRange.y));
+                this.gameoverLabel.text = "Congratulations!";
             }
         }
 
         /// <summary>
-        /// Ends the game cycle
+        /// Starts a random Enemy wave controller
         /// </summary>
-        public void EndGame()
+        private void StartRandomController()
         {
-            //End game
-            this.gameEnded = true;
-            StopCoroutine(this.spawner);
+            if (this.waves-- > 0)
+            {
+                this.enemyController = Instantiate(this.enemies[Random.Range(0, this.enemies.Length)]).GetComponent<WaveController>();
+                this.enemyController.StartWave();
+            }
+            else { StartCoroutine(StartBossFight()); }
+        }
 
-            //Activate endgame text labels
-            this.gameoverLabel.gameObject.SetActive(true);
-            this.restartLabel.gameObject.SetActive(true);
+        private IEnumerator<YieldInstruction> StartBossFight()
+        {
+            this.bossFight = true;
+            this.asteroidController.StopWave();
+            Destroy(this.asteroidController.gameObject);
+            yield return new WaitForSeconds(5f);
+
+            Instantiate(this.boss, this.bossSpawn, Quaternion.identity);
+        }
+
+        /// <summary>
+        /// Full enemy wave destroyed event
+        /// </summary>
+        public void WaveDestroyed()
+        {
+            this.score *= 2;
+            Instantiate(this.powerup, this.spawn, Quaternion.identity);
         }
         #endregion
 
         #region Functions
         private void Start()
         {
-            this.spawner = StartCoroutine(SpawnAsteroids());
+            this.asteroidController = Instantiate(this.asteroids).GetComponent<AsteroidWaveController>();
+            this.asteroidController.StartWave();
+            StartRandomController();
         }
 
         private void Update()
@@ -91,13 +112,17 @@ namespace SpaceShooter
                 return;
             }
 
-            //If game ended, check for restart keypress
             if (this.gameEnded)
             {
+                //If game ended, check for restart keypress
                 if (Input.GetKeyDown(KeyCode.R))
                 {
                     GameLogic.LoadScene(GameScenes.GAME);
                 }
+            }
+            else if (!this.bossFight && !this.enemyController.IsRunning)
+            {
+                    StartRandomController();
             }
         }
         #endregion
