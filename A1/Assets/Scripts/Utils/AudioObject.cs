@@ -35,7 +35,7 @@ namespace SpaceShooter.Utils
         private void Awake()
         {
             //Gets the AudioSource
-            this.source = this.gameObject.GetComponent<AudioSource>();
+            this.source = GetComponent<AudioSource>();
             //Any inheriting class Awake goes here
             OnAwake();
         }

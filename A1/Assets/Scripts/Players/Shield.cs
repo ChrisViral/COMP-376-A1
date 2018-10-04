@@ -53,7 +53,7 @@ namespace SpaceShooter.Players
         /// <summary>
         /// Awake function
         /// </summary>
-        protected override void OnAwake() => this.material = this.gameObject.GetComponent<Renderer>().material;
+        protected override void OnAwake() => this.material = GetComponent<Renderer>().material;
         #endregion
 
         #region Functions

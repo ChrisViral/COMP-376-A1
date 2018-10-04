@@ -29,7 +29,7 @@ namespace SpaceShooter.Physics
         private void Start() => this.spawnTime = Time.fixedTime;
 
         //Add an acceleration to the object over time
-        private void FixedUpdate() => this.rigidbody.AddForce(new Vector3(Mathf.Cos(this.ElapsedTime / this.period) * this.peakAcceleration, 0f, 0f), ForceMode.Acceleration);
+        private void FixedUpdate() => this.rigidbody.AddForce(Vector3.right * Mathf.Cos(this.ElapsedTime / this.period) * this.peakAcceleration, ForceMode.Acceleration);
         #endregion
     }
 }

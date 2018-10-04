@@ -725,7 +725,7 @@ MonoBehaviour:
   shotVolume: 0.5
   fireRate: 0.5
   gun: {fileID: 4047005425994804}
-  canShoot: 1
+  canShoot: 0
   vulnerability: {fileID: 1350895036256318, guid: e712b3e881939d049984d10e6b6708b5,
     type: 2}
   core: {fileID: 1324596748676566}
@@ -768,7 +768,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e5e6cf15f3ea442b81003bef3b9a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 0.41666666
+  acceleration: -0.4166667
   accelerationDuration: 0
   approachSpeed: -2.5
 --- !u!114 &114429477262848738
@@ -808,7 +808,7 @@ SphereCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: -0.5}
+  m_Center: {x: 0, y: 0, z: -0.4}
 --- !u!198 &198634455660104048
 ParticleSystem:
   m_ObjectHideFlags: 1

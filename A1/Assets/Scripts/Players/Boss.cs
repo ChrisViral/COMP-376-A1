@@ -165,17 +165,16 @@ namespace SpaceShooter.Players
         private IEnumerator Start()
         {
             //Setup boss
-            this.canShoot = false;
             this.healthbar = GameLogic.CurrentGame.bossProgressbar;
             this.maxHP = this.hp = this.maxHealth;
 
             //Setup arrival, then wait for arrival
-            AccelerationMovement mover = this.gameObject.GetComponent<AccelerationMovement>();
+            AccelerationMovement mover = GetComponent<AccelerationMovement>();
             mover.StartMovement(AccelerationMovement.MovementMode.APPROACH);
             yield return new WaitForSeconds(Mathf.Abs(mover.approachSpeed / mover.acceleration));
 
             //Start moving then wait before shooting
-            this.gameObject.GetComponent<FigureEightMovement>().enabled = true;
+            GetComponent<FigureEightMovement>().enabled = true;
             yield return new WaitForSeconds(this.vulnerabilityDelay);
 
             //Add vulnerabilities and start shooting

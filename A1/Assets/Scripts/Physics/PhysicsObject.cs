@@ -19,7 +19,7 @@ namespace SpaceShooter.Physics
         private void Awake()
         {
             //Get Rigidbody from components
-            this.rigidbody = this.gameObject.GetComponent<Rigidbody>();
+            this.rigidbody = GetComponent<Rigidbody>();
             OnAwake();
         }
         #endregion

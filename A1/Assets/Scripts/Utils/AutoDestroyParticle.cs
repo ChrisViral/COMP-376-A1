@@ -10,7 +10,7 @@ namespace SpaceShooter.Utils
     {
         #region Functions
         //Set object to be destroyed as soon as the ParticleSystem has played one full cycle
-        private void Start() => Destroy(this.gameObject, this.gameObject.GetComponent<ParticleSystem>().main.duration);
+        private void Start() => Destroy(this.gameObject, GetComponent<ParticleSystem>().main.duration);
         #endregion
     }
 }

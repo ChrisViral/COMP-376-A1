@@ -47,6 +47,20 @@ namespace SpaceShooter
         /// </summary>
         public static GameMode GameMode { get; internal set; }
 
+        private static bool isPaused;
+        /// <summary>
+        /// If the game is currently paused
+        /// </summary>
+        public static bool IsPaused
+        {
+            get { return isPaused; }
+            private set
+            {
+                isPaused = value;
+                Time.timeScale = isPaused ? 0f : 1f;
+            }
+        }
+
         /// <summary>
         /// Current ongoing Game
         /// </summary>
@@ -132,8 +146,17 @@ namespace SpaceShooter
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             //Setup audio
-            this.source = this.gameObject.GetComponent<AudioSource>();
+            this.source = GetComponent<AudioSource>();
             this.source.loop = true;
+        }
+
+        private void Update()
+        {
+            //Pauses the game
+            if (CurrentScene == GameScenes.GAME && Input.GetKeyDown(KeyCode.Escape))
+            {
+                IsPaused = !IsPaused;
+            }
         }
         #endregion
     }

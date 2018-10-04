@@ -76,7 +76,7 @@ namespace SpaceShooter.Players
         protected override void OnAwake()
         {
             //Get the audio source
-            this.source = this.gameObject.GetComponent<AudioSource>();
+            this.source = GetComponent<AudioSource>();
         }
         #endregion
 

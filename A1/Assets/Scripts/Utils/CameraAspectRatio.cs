@@ -18,7 +18,7 @@ namespace SpaceShooter.Utils
         private void Awake()
         {
             //Set camera aspect ratio as needed
-            Camera cam = this.gameObject.GetComponent<Camera>();
+            Camera cam = GetComponent<Camera>();
             float variance = this.aspectRatio / cam.aspect;
             if (variance < 1f) { cam.rect = new Rect((1f - variance) / 2f, 0f, variance, 1f); }
             else
