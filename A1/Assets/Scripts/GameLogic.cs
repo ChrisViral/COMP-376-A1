@@ -58,7 +58,12 @@ namespace SpaceShooter
         /// <summary>
         /// Curent GameMode
         /// </summary>
-        public static GameMode GameMode { get; internal set; }
+        public static GameMode Mode { get; internal set; }
+
+        /// <summary>
+        /// If currently in Hard mode
+        /// </summary>
+        public static bool IsHard => Mode == GameMode.HARD;
 
         private static bool isPaused;
         /// <summary>

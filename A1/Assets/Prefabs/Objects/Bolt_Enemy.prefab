@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 54957892385351638}
   - component: {fileID: 136378336318067872}
   - component: {fileID: 114187916227188348}
+  - component: {fileID: 114521318391880258}
   m_Layer: 0
   m_Name: Bolt_Enemy
   m_TagString: Projectile_Enemy
@@ -142,6 +143,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: -15
+--- !u!114 &114521318391880258
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1309078589653372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0941ae69a38a3546ad97bffc7091a61, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxTeleports: 3
+  teleportDistance: -19.9
+  sideDistance: 14
+  teleporterTag: Teleporter_Enemy
+  playerImmunityTime: 0
 --- !u!136 &136378336318067872
 CapsuleCollider:
   m_ObjectHideFlags: 1

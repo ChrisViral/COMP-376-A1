@@ -10,6 +10,10 @@ TagManager:
   - Projectile_Enemy
   - Powerup
   - Shield
+  - Teleporter
+  - Teleporter_Enemy
+  - Teleporter_Left
+  - Teleporter_Right
   layers:
   - Default
   - TransparentFX

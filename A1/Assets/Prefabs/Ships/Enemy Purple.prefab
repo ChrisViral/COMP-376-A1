@@ -336,6 +336,7 @@ MonoBehaviour:
   canShoot: 1
   minDelay: 0.5
   maxDelay: 1.5
+  range: 1
 --- !u!114 &114789702358508754
 MonoBehaviour:
   m_ObjectHideFlags: 1

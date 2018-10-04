@@ -31,7 +31,7 @@ namespace SpaceShooter.Waves
         protected override IEnumerator<YieldInstruction> Spawner()
         {
             //Spawn first enemy
-            SpawnEnemy().GetComponent<Enemy>().canShoot = false;
+            SpawnEnemy().GetComponent<Enemy>().canShoot = GameLogic.IsHard;
 
             //Spawn remaining layers
             for (int i = 1; i < this.layers; i++)
@@ -41,8 +41,8 @@ namespace SpaceShooter.Waves
 
                 //Spawn both enemies side by side
                 float space = this.spacing * i;
-                SpawnEnemy(new Vector3(this.spawn.x - space, this.spawn.y, this.spawn.z)).GetComponent<Enemy>().canShoot = false;
-                SpawnEnemy(new Vector3(this.spawn.x + space, this.spawn.y, this.spawn.z)).GetComponent<Enemy>().canShoot = false;
+                SpawnEnemy(new Vector3(this.spawn.x - space, this.spawn.y, this.spawn.z)).GetComponent<Enemy>().canShoot = GameLogic.IsHard;
+                SpawnEnemy(new Vector3(this.spawn.x + space, this.spawn.y, this.spawn.z)).GetComponent<Enemy>().canShoot = GameLogic.IsHard;
             }
         }
         #endregion

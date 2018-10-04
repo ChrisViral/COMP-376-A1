@@ -154,6 +154,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0941ae69a38a3546ad97bffc7091a61, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxTeleports: 3
+  teleportDistance: 19.9
+  sideDistance: 14
+  teleporterTag: Teleporter
+  playerImmunityTime: 0.1
 --- !u!136 &136917128038355802
 CapsuleCollider:
   m_ObjectHideFlags: 1

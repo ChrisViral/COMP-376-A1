@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Physics;
+using UnityEngine;
 using UnityEngine.UI;
 using Bounds = SpaceShooter.Utils.Bounds;
 
@@ -32,6 +33,8 @@ namespace SpaceShooter.Players
         private AudioClip powerupSound;
         [SerializeField]
         private float powerupVolume;
+        [SerializeField]
+        private bool invulnerable;
         #endregion
 
         #region Properties
@@ -79,6 +82,8 @@ namespace SpaceShooter.Players
         /// </summary>
         public override bool Die()
         {
+            if (this.invulnerable) { return false; }
+
             Debug.Log($"Die called at level {this.Level}");
             //Make sure life is back to zero
             if (DecrementLevel() < 0)
@@ -157,10 +162,15 @@ namespace SpaceShooter.Players
 
         private void OnTriggerEnter(Collider other)
         {
-            //If the shield is inactive and hit by an enemy, damage player
-            if (this.Controllable && !this.shield.Active && other.CompareTag("Projectile_Enemy"))
+            if (this.invulnerable) { return; }
+
+            //If the shield is inactive and hit, damage player
+            if (this.Controllable && !this.shield.Active)
             {
-                Die();
+                if (other.CompareTag("Projectile_Enemy") || (GameLogic.IsHard && other.CompareTag("Projectile") && other.GetComponent<Bolt>().CanHurtPlayer))
+                {
+                    Die();
+                }
             }
         }
         #endregion

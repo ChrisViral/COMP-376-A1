@@ -51,7 +51,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 95edd78503ad22d4aa80531a79a99b6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delay: 2
+  delay: 3
   spawn: {x: -6, y: 6, z: 17}
   asteroids:
   - {fileID: 1241360854899996, guid: 6df5c5efca7a79a4cb184763481b6110, type: 2}

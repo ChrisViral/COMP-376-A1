@@ -35,6 +35,7 @@ namespace SpaceShooter.Players
         private int maxHealth;
 
         //Private fields
+        private Player player;
         private int hp;
         private float maxHP;
         private Progressbar healthbar;
@@ -155,8 +156,27 @@ namespace SpaceShooter.Players
         /// </summary>
         protected override void Fire()
         {
+            Transform g;
+            if (GameLogic.IsHard && this.player != null)
+            {
+                g = this.guns[0];
+                float distance = Mathf.Abs(g.position.x - this.player.transform.position.x);
+                for (int i = 1; i < this.guns.Length; i++)
+                {
+                    Transform t = this.guns[i];
+                    float d = Mathf.Abs(t.position.x - this.player.transform.position.x);
+                    if (d < distance)
+                    {
+                        g = t;
+                        distance = d;
+                    }
+                }
+            }
+            //Get random gun
+            else { g = this.guns[Random.Range(0, this.guns.Length)]; }
+
             //Fire at a random gun location
-            Instantiate(this.bolt, this.guns[Random.Range(0, this.guns.Length)].position, Quaternion.identity);
+            Instantiate(this.bolt, g.position, Quaternion.identity);
             this.source.PlayOneShot(this.boltSound, this.shotVolume);
         }
         #endregion
@@ -165,8 +185,9 @@ namespace SpaceShooter.Players
         private IEnumerator Start()
         {
             //Setup boss
+            this.player = GameLogic.CurrentGame.player;
             this.healthbar = GameLogic.CurrentGame.bossProgressbar;
-            this.maxHP = this.hp = this.maxHealth;
+            this.maxHP = this.hp = this.maxHealth * (GameLogic.IsHard ? 2 : 1);
 
             //Setup arrival, then wait for arrival
             AccelerationMovement mover = GetComponent<AccelerationMovement>();

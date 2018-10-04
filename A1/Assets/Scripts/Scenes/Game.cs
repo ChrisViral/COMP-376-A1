@@ -1,4 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using System.Text;
 using SpaceShooter.Physics;
 using SpaceShooter.Players;
 using SpaceShooter.UI;
@@ -17,7 +20,7 @@ namespace SpaceShooter.Scenes
         #region Fields
         //Inspector fields
         [SerializeField, Header("Gameplay")]
-        private Player player;
+        internal Player player;
         [SerializeField]
         private AccelerationMovement background;
         [SerializeField]
@@ -48,7 +51,6 @@ namespace SpaceShooter.Scenes
         internal Progressbar bossProgressbar;
 
         //Private fields
-        private GameMode mode;
         private int score;
         private bool bossFight;
         private WaveController asteroidController, enemyController;
@@ -78,10 +80,9 @@ namespace SpaceShooter.Scenes
         public void EndGame(bool won = false)
         {
             //End game
+            if (this.asteroidController != null) { Destroy(this.asteroidController); }
             this.GameEnded = true;
             this.player.Controllable = false;
-            this.asteroidController.StopWave();
-            this.enemyController.StopWave();
 
             //Start the transition Coroutine
             StartCoroutine(won ? WinTransition() : LoseTransition());
@@ -93,6 +94,9 @@ namespace SpaceShooter.Scenes
         /// <returns></returns>
         private IEnumerator<YieldInstruction> WinTransition()
         {
+            //Write password file
+            File.WriteAllText(Path.Combine(Application.dataPath, @"..\Password.txt"), "Emilie sucks.", Encoding.ASCII);
+
             //Wait for the endgame
             yield return new WaitForSeconds(this.endGameWait);
 
@@ -115,10 +119,6 @@ namespace SpaceShooter.Scenes
         /// <returns></returns>
         private IEnumerator<YieldInstruction> LoseTransition()
         {
-            //Stop spawners
-            this.asteroidController.StopWave();
-            this.enemyController.StopWave();
-
             //Update UI and fade
             this.endFade.Fade(true);
             yield return new WaitForSeconds(this.endFade.FadeTime / 2f);
@@ -153,8 +153,11 @@ namespace SpaceShooter.Scenes
         private IEnumerator<YieldInstruction> StartBossFight()
         {
             this.bossFight = true;
-            this.asteroidController.StopWave();
-            Destroy(this.asteroidController.gameObject);
+            if (!GameLogic.IsHard)
+            {
+                this.asteroidController.StopWave();
+                Destroy(this.asteroidController.gameObject);
+            }
             yield return new WaitForSeconds(this.bossDelay);
             
             this.bossFade.Fade();
@@ -202,12 +205,8 @@ namespace SpaceShooter.Scenes
         #endregion
 
         #region Functions
-        private void Awake()
-        {
-            //Get game mode and add OnPause event
-            this.mode = GameLogic.GameMode;
-            GameLogic.OnPause += OnPause;
-        }
+        //Add OnPause listener
+        private void Awake() => GameLogic.OnPause += OnPause;
 
         private void Start()
         {

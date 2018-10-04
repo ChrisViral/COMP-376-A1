@@ -744,7 +744,7 @@ MonoBehaviour:
   - {fileID: 4524785847074510}
   explosionCount: 5
   score: 1000
-  maxHealth: 20
+  maxHealth: 15
 --- !u!114 &114332532753205190
 MonoBehaviour:
   m_ObjectHideFlags: 1

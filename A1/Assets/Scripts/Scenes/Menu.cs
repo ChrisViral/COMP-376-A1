@@ -87,7 +87,7 @@ namespace SpaceShooter.Scenes
         /// </summary>
         public void OnNormalMode()
         {
-            GameLogic.GameMode = GameMode.NORMAL;
+            GameLogic.Mode = GameMode.NORMAL;
             GameLogic.LoadScene(GameScenes.GAME);
         }
 
@@ -96,7 +96,7 @@ namespace SpaceShooter.Scenes
         /// </summary>
         public void OnHardMode()
         {
-            GameLogic.GameMode = GameMode.HARD;
+            GameLogic.Mode = GameMode.HARD;
             GameLogic.LoadScene(GameScenes.GAME);
         }
 

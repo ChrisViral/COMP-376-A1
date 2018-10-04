@@ -1,4 +1,5 @@
-﻿using SpaceShooter.Utils;
+﻿using SpaceShooter.Physics;
+using SpaceShooter.Utils;
 using UnityEngine;
 
 namespace SpaceShooter.Players
@@ -98,6 +99,14 @@ namespace SpaceShooter.Players
                     case "Projectile_Enemy":
                         Destroy(other.gameObject);
                         PlayClip();
+                        break;
+
+                    case "Projectile":
+                        if (GameLogic.IsHard && other.GetComponent<Bolt>().CanHurtPlayer)
+                        {
+                            Destroy(other.gameObject);
+                            PlayClip();
+                        }
                         break;
                 }
             }
