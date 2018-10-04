@@ -10,7 +10,7 @@ namespace SpaceShooter.Players
     /// <summary>
     /// Boss ship
     /// </summary>
-    [DisallowMultipleComponent, RequireComponent(typeof(FigureEightMovement))]
+    [DisallowMultipleComponent, RequireComponent(typeof(FigureEightMovement), typeof(AccelerationMovement))]
     public class Boss : Ship
     {
         #region Fields
@@ -29,8 +29,6 @@ namespace SpaceShooter.Players
         private Transform[] vulnerabilities;
         [SerializeField, Header("Boss fight"), Tooltip("Guns location")]
         private Transform[] guns;
-        [SerializeField, Tooltip("Time taken for the boss to come into the screen")]
-        private float arrivalTime;
         [SerializeField]
         private int explosionCount, score;
         [SerializeField]
@@ -40,8 +38,6 @@ namespace SpaceShooter.Players
         private int hp;
         private float maxHP;
         private Progressbar healthbar;
-        private float arrival, elapsedTime;
-        private bool arrived;
         #endregion
         
         #region Properties
@@ -163,31 +159,6 @@ namespace SpaceShooter.Players
             Instantiate(this.bolt, this.guns[Random.Range(0, this.guns.Length)].position, Quaternion.identity);
             this.source.PlayOneShot(this.boltSound, this.shotVolume);
         }
-
-        /// <summary>
-        /// FixedUpdate function
-        /// </summary>
-        protected override void OnFixedUpdate()
-        {
-            //Until the ship has arrived, move it
-            if (!this.arrived)
-            {
-                //Get time until arrival
-                this.arrival -= Time.fixedDeltaTime;
-                
-                if (this.arrival > 0)
-                {
-                    //Set speed until arrived
-                    this.rigidbody.velocity = this.transform.forward * Mathf.Lerp(0f, this.speed, this.arrival / this.arrivalTime);
-                }
-                else
-                {
-                    //When arrived, start figure eight movement
-                    this.gameObject.GetComponent<FigureEightMovement>().enabled = true;
-                    this.arrived = true;
-                }
-            }
-        }
         #endregion
 
         #region Functions
@@ -199,9 +170,13 @@ namespace SpaceShooter.Players
             this.maxHP = this.hp = this.maxHealth;
 
             //Setup arrival, then wait for arrival
-            this.arrival = this.arrivalTime;
-            this.rigidbody.velocity = this.transform.forward * this.speed;
-            yield return new WaitForSeconds(this.vulnerabilityDelay + this.arrivalTime);
+            AccelerationMovement mover = this.gameObject.GetComponent<AccelerationMovement>();
+            mover.StartMovement(AccelerationMovement.MovementMode.APPROACH);
+            yield return new WaitForSeconds(Mathf.Abs(mover.approachSpeed / mover.acceleration));
+
+            //Start moving then wait before shooting
+            this.gameObject.GetComponent<FigureEightMovement>().enabled = true;
+            yield return new WaitForSeconds(this.vulnerabilityDelay);
 
             //Add vulnerabilities and start shooting
             AddVulnerabilities();

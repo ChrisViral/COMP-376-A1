@@ -39,6 +39,11 @@ namespace SpaceShooter.Players
         /// Current level of the player
         /// </summary>
         public int Level { get; private set; }
+
+        /// <summary>
+        /// If the Player can currently be controlled
+        /// </summary>
+        public bool Controllable { get; set; } = true;
         #endregion
 
         #region Methods
@@ -124,10 +129,13 @@ namespace SpaceShooter.Players
         /// </summary>
         protected override void OnFixedUpdate()
         {
-            //Movement speed
-            this.rigidbody.velocity = new Vector3(Input.GetAxis("Horizontal") * this.speed, 0f, Input.GetAxis("Vertical") * this.speed);
-            //Limit to game bounds
-            this.rigidbody.position = this.gameLimits.BoundVector(this.rigidbody.position);
+            if (this.Controllable)
+            {
+                //Movement speed
+                this.rigidbody.velocity = new Vector3(Input.GetAxis("Horizontal") * this.speed, 0f, Input.GetAxis("Vertical") * this.speed);
+                //Limit to game bounds
+                this.rigidbody.position = this.gameLimits.BoundVector(this.rigidbody.position);
+            }
         }
 
         /// <summary>
@@ -136,7 +144,7 @@ namespace SpaceShooter.Players
         protected override void OnUpdate()
         {
             //If fire is pressed and enough time has elapsed since last fire, spawn a new shot
-            if (Input.GetButton("Fire1"))
+            if (this.Controllable && Input.GetButton("Fire1"))
             {
                 FireGun();
             }

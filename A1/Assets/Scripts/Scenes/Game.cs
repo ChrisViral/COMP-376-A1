@@ -19,7 +19,7 @@ namespace SpaceShooter.Scenes
         [SerializeField, Header("Gameplay")]
         private Player player;
         [SerializeField]
-        private BackgroundMover background;
+        private AccelerationMovement background;
         [SerializeField]
         private FadeGraphics fadeToBlack, bossFade;
         [SerializeField]
@@ -94,7 +94,9 @@ namespace SpaceShooter.Scenes
             this.restartLabel.text += "\nPress R to restart...";
 
             //Fade out screen
-            this.background.StartMovement(BackgroundMover.MovementMode.ACCELERATE);
+            this.background.StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
+            this.player.Controllable = false;
+            this.player.GetComponent<AccelerationMovement>().StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
             this.fadeToBlack.Fade();
         }
 
@@ -171,7 +173,7 @@ namespace SpaceShooter.Scenes
 
         private void Start()
         {
-            this.background.StartMovement(BackgroundMover.MovementMode.APPROACH);
+            this.background.StartMovement(AccelerationMovement.MovementMode.APPROACH);
             this.asteroidController = Instantiate(this.asteroids).GetComponent<AsteroidWaveController>();
             this.asteroidController.StartWave();
             StartRandomController();
