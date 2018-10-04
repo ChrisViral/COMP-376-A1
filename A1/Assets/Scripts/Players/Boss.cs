@@ -120,7 +120,7 @@ namespace SpaceShooter.Players
         public void HitCore()
         {
             this.source.PlayOneShot(this.vulnerabilitySound, this.vulnerabilityVolume);
-            this.healthbar.Progress = --this.hp / this.maxHP;
+            this.healthbar.Progress = Mathf.Round((--this.hp * 100f) / this.maxHP) / 100f;  //Prevents some weird rounding errors
 
             //If out of HP, kill the Boss
             if (this.hp == 0)

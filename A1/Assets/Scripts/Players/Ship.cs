@@ -69,41 +69,20 @@ namespace SpaceShooter.Players
             Instantiate(this.bolt, this.gun.position, Quaternion.identity);
             this.source.PlayOneShot(this.boltSound, this.shotVolume);
         }
-
-        /// <summary>
-        /// OnAwake function
-        /// </summary>
-        protected override void OnAwake()
-        {
-            //Get the audio source
-            this.source = GetComponent<AudioSource>();
-        }
         #endregion
 
         #region Functions
-        private void FixedUpdate()
-        {
-            //Call children object FixedUpdate
-            OnFixedUpdate();
+        //Get the audio source
+        protected override void OnAwake() => this.source = GetComponent<AudioSource>();
 
+        //Fires the gun as soon as possible
+        protected override void OnUpdate() => FireGun();
+
+        protected override void OnFixedUpdate()
+        {
             //Side tilt
             this.rigidbody.rotation = Quaternion.Euler(0f, 0f, this.rigidbody.velocity.x * -this.tilt);
         }
-
-        //Basic update loop
-        private void Update() => OnUpdate();
-        #endregion
-
-        #region Virtual Methods
-        /// <summary>
-        /// Is called alongside the Ship FixedUpdate() function, use to access the FixedUpdate function
-        /// </summary>
-        protected virtual void OnFixedUpdate() { }
-
-        /// <summary>
-        /// Is called alongside with the Ship Update function, allows overriding base functionality
-        /// </summary>
-        protected virtual void OnUpdate() => FireGun();
         #endregion
     }
 }

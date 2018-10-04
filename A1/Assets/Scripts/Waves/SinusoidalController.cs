@@ -22,7 +22,7 @@ namespace SpaceShooter.Waves
         public override int Count => this.count;
         #endregion
 
-        #region
+        #region Methods
         protected override IEnumerator<YieldInstruction> Spawner()
         {
             //Spawn first enemy

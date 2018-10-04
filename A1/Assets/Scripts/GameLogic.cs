@@ -36,6 +36,19 @@ namespace SpaceShooter
         public static GameLogic Instance { get; private set; }
         #endregion
 
+        #region Events
+        /// <summary>
+        /// OnPause Delegate
+        /// </summary>
+        /// <param name="state">The current state of the game (paused or not)</param>
+        public delegate void PauseDelegate(bool state);
+
+        /// <summary>
+        /// On game pause event
+        /// </summary>
+        public static event PauseDelegate OnPause;
+        #endregion
+
         #region Static Properties
         /// <summary>
         /// Currently loaded game scene
@@ -54,10 +67,18 @@ namespace SpaceShooter
         public static bool IsPaused
         {
             get { return isPaused; }
-            private set
+            internal set
             {
-                isPaused = value;
-                Time.timeScale = isPaused ? 0f : 1f;
+                //Check if the value has changed
+                if (isPaused != value)
+                {
+                    //Set value and stop Unity time
+                    isPaused = value;
+                    Time.timeScale = isPaused ? 0f : 1f;
+
+                    //Fire pause event
+                    OnPause?.Invoke(isPaused);
+                }
             }
         }
 
@@ -153,9 +174,13 @@ namespace SpaceShooter
         private void Update()
         {
             //Pauses the game
-            if (CurrentScene == GameScenes.GAME && Input.GetKeyDown(KeyCode.Escape))
+            if (!IsPaused && CurrentScene == GameScenes.GAME && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
             {
-                IsPaused = !IsPaused;
+                Game game = FindObjectOfType<Game>();
+                if (game != null && !game.GameEnded)
+                {
+                    IsPaused = true;
+                }
             }
         }
         #endregion

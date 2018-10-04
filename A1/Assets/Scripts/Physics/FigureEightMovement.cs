@@ -28,7 +28,7 @@ namespace SpaceShooter.Physics
         //Get spawn time
         private void Start() => this.spawnTime = Time.fixedTime;
         
-        private void FixedUpdate()
+        protected override void OnFixedUpdate()
         {
             /* So, explanation time. The parametric position equations for a figure eight movement are
              * x = sin(t)

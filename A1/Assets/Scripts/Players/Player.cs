@@ -123,32 +123,6 @@ namespace SpaceShooter.Players
                 this.source.PlayOneShot(this.boltSound, this.shotVolume);
             }
         }
-
-        /// <summary>
-        /// FixedUpdate function
-        /// </summary>
-        protected override void OnFixedUpdate()
-        {
-            if (this.Controllable)
-            {
-                //Movement speed
-                this.rigidbody.velocity = new Vector3(Input.GetAxis("Horizontal") * this.speed, 0f, Input.GetAxis("Vertical") * this.speed);
-                //Limit to game bounds
-                this.rigidbody.position = this.gameLimits.BoundVector(this.rigidbody.position);
-            }
-        }
-
-        /// <summary>
-        /// Update function
-        /// </summary>
-        protected override void OnUpdate()
-        {
-            //If fire is pressed and enough time has elapsed since last fire, spawn a new shot
-            if (this.Controllable && Input.GetButton("Fire1"))
-            {
-                FireGun();
-            }
-        }
         #endregion
 
         #region Functions
@@ -159,10 +133,32 @@ namespace SpaceShooter.Players
             this.lives[2].CrossFadeAlpha(OFF, 0f, true);
         }
 
+        protected override void OnUpdate()
+        {
+            //If fire is pressed and enough time has elapsed since last fire, spawn a new shot
+            if (this.Controllable && Input.GetButton("Fire1"))
+            {
+                FireGun();
+            }
+        }
+        
+        protected override void OnFixedUpdate()
+        {
+            if (this.Controllable)
+            {
+                //Movement speed
+                this.rigidbody.velocity = new Vector3(Input.GetAxis("Horizontal") * this.speed, 0f, Input.GetAxis("Vertical") * this.speed);
+                //Limit to game bounds
+                this.rigidbody.position = this.gameLimits.BoundVector(this.rigidbody.position);
+                //Call Ship.FixedUpdate()
+                base.OnFixedUpdate();
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             //If the shield is inactive and hit by an enemy, damage player
-            if (!this.shield.Active && other.CompareTag("Projectile_Enemy"))
+            if (this.Controllable && !this.shield.Active && other.CompareTag("Projectile_Enemy"))
             {
                 Die();
             }

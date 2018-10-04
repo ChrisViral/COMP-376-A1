@@ -26,7 +26,7 @@ namespace SpaceShooter.Utils
         public virtual void PlayClip() => this.source.PlayOneShot(this.clip, this.volume);
 
         /// <summary>
-        /// Awake function
+        /// This is called from within Awake, you should override this instead of writing an Awake() method
         /// </summary>
         protected virtual void OnAwake() { }
         #endregion

@@ -66,7 +66,7 @@ MonoBehaviour:
   delay: 7
   spawn: {x: 0, y: 0, z: 17}
   enemy: {fileID: 1646578850731952, guid: c348e733a6fe3e74790b1ab94154339e, type: 2}
-  interval: 0.5
+  interval: 0.7
+  listener: {fileID: 114187307828168438}
   spacing: 2
   layers: 3
-  listener: {fileID: 114187307828168438}

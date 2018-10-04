@@ -515,7 +515,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02879daf976026547a21df594c12276b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8
+  speed: 8.5
   tilt: 2.5
   explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   bolt: {fileID: 1800761522205330, guid: 0457d0425e11fd24ea9c361165fd9151, type: 2}
@@ -547,7 +547,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e5e6cf15f3ea442b81003bef3b9a9e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  acceleration: 2
+  acceleration: 1.5
   accelerationDuration: 5
   approachSpeed: 0
 --- !u!114 &114902683324674342

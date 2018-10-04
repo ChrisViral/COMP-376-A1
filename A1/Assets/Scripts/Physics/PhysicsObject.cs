@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using SpaceShooter.Utils;
+using UnityEngine;
 
 namespace SpaceShooter.Physics
 {
@@ -6,13 +7,20 @@ namespace SpaceShooter.Physics
     /// Physical object abstract class
     /// </summary>
     [RequireComponent(typeof(Rigidbody))]
-    public abstract class PhysicsObject : MonoBehaviour
+    public abstract class PhysicsObject : PausableObject
     {
         #region Fields
         /// <summary>
         /// This object's Rigidbody component
         /// </summary>
         protected new Rigidbody rigidbody;
+        #endregion
+
+        #region Virtual Methods
+        /// <summary>
+        /// This is called from within Awake, you should override this instead of writing an Awake() method
+        /// </summary>
+        protected virtual void OnAwake() { }
         #endregion
 
         #region Functions
@@ -22,13 +30,6 @@ namespace SpaceShooter.Physics
             this.rigidbody = GetComponent<Rigidbody>();
             OnAwake();
         }
-        #endregion
-
-        #region Virtual Methods
-        /// <summary>
-        /// Is called alongside the PhysicsObject Awake() function, use to access the Awake function
-        /// </summary>
-        protected virtual void OnAwake() { }
         #endregion
     }
 }

@@ -67,7 +67,7 @@ namespace SpaceShooter.Players
         private void Update()
         {
             //When shield is active
-            if (this.Active)
+            if (!GameLogic.IsPaused && this.Active)
             {
                 this.timeLeft -= Time.deltaTime;
                 //Fade out slowly

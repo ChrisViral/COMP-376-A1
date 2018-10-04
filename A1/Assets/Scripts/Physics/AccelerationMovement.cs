@@ -80,7 +80,7 @@ namespace SpaceShooter.Physics
         #endregion
 
         #region Functions
-        private void FixedUpdate()
+        protected override void OnFixedUpdate()
         {
             //Only update if active
             if (this.Active)

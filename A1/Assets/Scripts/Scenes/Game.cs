@@ -21,13 +21,13 @@ namespace SpaceShooter.Scenes
         [SerializeField]
         private AccelerationMovement background;
         [SerializeField]
-        private FadeGraphics fadeToBlack, bossFade;
-        [SerializeField]
         private float endGameWait;
         [SerializeField, Header("UI")]
-        private Text scoreLabel;
+        private GameObject pausePanel;
         [SerializeField]
-        private Text restartLabel, gameoverLabel;
+        private FadeGraphics endFade, bossFade;
+        [SerializeField]
+        private Text scoreLabel, gameoverLabel;
         [SerializeField, Header("Enemy waves")]
         private int waves;
         [SerializeField, Tooltip("Asteroid spawner")]
@@ -50,8 +50,15 @@ namespace SpaceShooter.Scenes
         //Private fields
         private GameMode mode;
         private int score;
-        private bool gameEnded, bossFight;
+        private bool bossFight;
         private WaveController asteroidController, enemyController;
+        #endregion
+
+        #region Properties
+        /// <summary>
+        /// If the Game has been ended (either winning or losing)
+        /// </summary>
+        public bool GameEnded { get; private set; }
         #endregion
 
         #region Methods
@@ -71,7 +78,8 @@ namespace SpaceShooter.Scenes
         public void EndGame(bool won = false)
         {
             //End game
-            this.gameEnded = true;
+            this.GameEnded = true;
+            this.player.Controllable = false;
             this.asteroidController.StopWave();
             this.enemyController.StopWave();
 
@@ -89,15 +97,16 @@ namespace SpaceShooter.Scenes
             yield return new WaitForSeconds(this.endGameWait);
 
             //Update UI
-            this.gameoverLabel.gameObject.SetActive(true);
             this.gameoverLabel.text = "Congratulations!";
-            this.restartLabel.text += "\nPress R to restart...";
 
             //Fade out screen
             this.background.StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
-            this.player.Controllable = false;
             this.player.GetComponent<AccelerationMovement>().StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
-            this.fadeToBlack.Fade();
+            this.endFade.Fade();
+            yield return new WaitForSeconds(this.endFade.FadeTime);
+
+            //Make buttons interactable
+            this.endFade.ToggleSelectables();
         }
 
         /// <summary>
@@ -111,11 +120,8 @@ namespace SpaceShooter.Scenes
             this.enemyController.StopWave();
 
             //Update UI and fade
-            this.gameoverLabel.gameObject.SetActive(true);
-            this.restartLabel.text += "\nPress R to restart...";
-            this.fadeToBlack.Fade(true);
-            this.bossFade.Fade(true);
-            yield return new WaitForSeconds(this.fadeToBlack.FadeTime / 2f);
+            this.endFade.Fade(true);
+            yield return new WaitForSeconds(this.endFade.FadeTime / 2f);
 
             //Destroy the boss if it exists after the transition
             Boss b = FindObjectOfType<Boss>();
@@ -123,6 +129,9 @@ namespace SpaceShooter.Scenes
             {
                 Destroy(b.gameObject);
             }
+
+            //Make buttons interactable
+            this.endFade.ToggleSelectables();
         }
 
         /// <summary>
@@ -165,11 +174,40 @@ namespace SpaceShooter.Scenes
                 Debug.Log("A powerup has been created!");
             }
         }
+
+        /// <summary>
+        /// Pause event
+        /// </summary>
+        /// <param name="state">Current game pause state</param>
+        public void OnPause(bool state) => this.pausePanel.SetActive(state);
+
+        /// <summary>
+        /// Resume button press
+        /// </summary>
+        public void OnResume() => GameLogic.IsPaused = false;
+
+        /// <summary>
+        /// Return to menu button press
+        /// </summary>
+        public void OnReturnToMenu()
+        {
+            GameLogic.IsPaused = false;
+            GameLogic.LoadScene(GameScenes.MENU);
+        }
+
+        /// <summary>
+        /// Restarts a new game
+        /// </summary>
+        public void OnRestart() => GameLogic.LoadScene(GameScenes.GAME);
         #endregion
 
         #region Functions
-        //Get current Game Mode
-        private void Awake() => this.mode = GameLogic.GameMode;
+        private void Awake()
+        {
+            //Get game mode and add OnPause event
+            this.mode = GameLogic.GameMode;
+            GameLogic.OnPause += OnPause;
+        }
 
         private void Start()
         {
@@ -181,13 +219,7 @@ namespace SpaceShooter.Scenes
 
         private void Update()
         {
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                GameLogic.LoadScene(GameScenes.MENU);
-                return;
-            }
-
-            if (this.gameEnded)
+            if (this.GameEnded)
             {
                 //If game ended, check for restart keypress
                 if (Input.GetKeyDown(KeyCode.R))
@@ -200,6 +232,9 @@ namespace SpaceShooter.Scenes
                     StartRandomController();
             }
         }
+
+        //Remove the OnPause event
+        private void OnDestroy() => GameLogic.OnPause -= OnPause;
         #endregion
     }
 }
