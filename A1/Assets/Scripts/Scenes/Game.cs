@@ -1,6 +1,5 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
-using System.Reflection;
 using System.Text;
 using SpaceShooter.Physics;
 using SpaceShooter.Players;
@@ -28,9 +27,11 @@ namespace SpaceShooter.Scenes
         [SerializeField, Header("UI")]
         private GameObject pausePanel;
         [SerializeField]
-        private FadeGraphics endFade, bossFade;
-        [SerializeField]
         private Text scoreLabel, gameoverLabel;
+        [SerializeField]
+        private Animator uiAnimator;
+        [SerializeField]
+        private float bossUISpeed, endUISpeed;
         [SerializeField, Header("Enemy waves")]
         private int waves;
         [SerializeField, Tooltip("Asteroid spawner")]
@@ -106,11 +107,7 @@ namespace SpaceShooter.Scenes
             //Fade out screen
             this.background.StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
             this.player.GetComponent<AccelerationMovement>().StartMovement(AccelerationMovement.MovementMode.ACCELERATE);
-            this.endFade.Fade();
-            yield return new WaitForSeconds(this.endFade.FadeTime);
-
-            //Make buttons interactable
-            this.endFade.ToggleSelectables();
+            this.uiAnimator.SetTrigger("End");
         }
 
         /// <summary>
@@ -120,8 +117,8 @@ namespace SpaceShooter.Scenes
         private IEnumerator<YieldInstruction> LoseTransition()
         {
             //Update UI and fade
-            this.endFade.Fade(true);
-            yield return new WaitForSeconds(this.endFade.FadeTime / 2f);
+            this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed / 2f);
+            yield return new WaitForSeconds(this.endUISpeed / 2f);
 
             //Destroy the boss if it exists after the transition
             Boss b = FindObjectOfType<Boss>();
@@ -129,9 +126,6 @@ namespace SpaceShooter.Scenes
             {
                 Destroy(b.gameObject);
             }
-
-            //Make buttons interactable
-            this.endFade.ToggleSelectables();
         }
 
         /// <summary>
@@ -160,7 +154,7 @@ namespace SpaceShooter.Scenes
             }
             yield return new WaitForSeconds(this.bossDelay);
             
-            this.bossFade.Fade();
+            this.uiAnimator.SetTrigger("Boss");
             Instantiate(this.boss, this.bossSpawn, Quaternion.identity);
         }
 
@@ -210,6 +204,9 @@ namespace SpaceShooter.Scenes
 
         private void Start()
         {
+            //Set important stuff
+            this.uiAnimator.SetFloat("BossSpeed", this.bossUISpeed);
+            this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed);
             this.background.StartMovement(AccelerationMovement.MovementMode.APPROACH);
             this.asteroidController = Instantiate(this.asteroids).GetComponent<AsteroidWaveController>();
             this.asteroidController.StartWave();

@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using SpaceShooter.Physics;
 using SpaceShooter.Scenes;
@@ -143,7 +143,6 @@ namespace SpaceShooter.Players
             }
 
             //Clean out the remaining stuff
-            this.healthbar.GetComponent<FadeGraphics>().Fade(true);
             Game game = GameLogic.CurrentGame;
             game.UpdateScore(this.score);
             game.EndGame(true);
