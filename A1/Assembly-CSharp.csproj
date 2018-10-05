@@ -72,7 +72,6 @@
      <Compile Include="Assets\Scripts\Players\Vulnerability.cs" />
      <Compile Include="Assets\Scripts\Scenes\Game.cs" />
      <Compile Include="Assets\Scripts\Scenes\Menu.cs" />
-     <Compile Include="Assets\Scripts\UI\FadeGraphics.cs" />
      <Compile Include="Assets\Scripts\UI\Progressbar.cs" />
      <Compile Include="Assets\Scripts\Utils\AudioObject.cs" />
      <Compile Include="Assets\Scripts\Utils\AutoDestroyParticle.cs" />
