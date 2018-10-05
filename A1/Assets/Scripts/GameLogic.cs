@@ -179,13 +179,9 @@ namespace SpaceShooter
         private void Update()
         {
             //Pauses the game
-            if (!IsPaused && CurrentScene == GameScenes.GAME && (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P)))
+            if (!IsPaused && CurrentScene == GameScenes.GAME && Input.GetKeyDown(KeyCode.Escape) && !CurrentGame.GameEnded)
             {
-                Game game = FindObjectOfType<Game>();
-                if (game != null && !game.GameEnded)
-                {
-                    IsPaused = true;
-                }
+                IsPaused = true;
             }
         }
         #endregion

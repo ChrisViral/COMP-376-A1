@@ -81,7 +81,8 @@ namespace SpaceShooter.Scenes
         public void EndGame(bool won = false)
         {
             //End game
-            if (this.asteroidController != null) { Destroy(this.asteroidController); }
+            if (this.asteroidController) { Destroy(this.asteroidController.gameObject); }
+            if (this.enemyController) { Destroy(this.enemyController.gameObject); }
             this.GameEnded = true;
             this.player.Controllable = false;
 
@@ -95,8 +96,11 @@ namespace SpaceShooter.Scenes
         /// <returns></returns>
         private IEnumerator<YieldInstruction> WinTransition()
         {
-            //Write password file
-            File.WriteAllText(Path.Combine(Application.dataPath, @"..\Password.txt"), "Emilie sucks.", Encoding.ASCII);
+            //Write password file in hard mode
+            if (GameLogic.IsHard ) { File.WriteAllText(Path.Combine(Application.dataPath, @"..\Password.txt"), "Emilie sucks.", Encoding.ASCII); }
+
+            //Stop player movement
+            this.player.GetComponent<Rigidbody>().velocity = Vector3.zero;
 
             //Wait for the endgame
             yield return new WaitForSeconds(this.endGameWait);
@@ -117,8 +121,9 @@ namespace SpaceShooter.Scenes
         private IEnumerator<YieldInstruction> LoseTransition()
         {
             //Update UI and fade
-            this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed / 2f);
-            yield return new WaitForSeconds(this.endUISpeed / 2f);
+            this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed * 2f);
+            this.uiAnimator.SetTrigger("End");
+            yield return new WaitForSeconds(2f / this.endUISpeed);
 
             //Destroy the boss if it exists after the transition
             Boss b = FindObjectOfType<Boss>();
@@ -215,15 +220,7 @@ namespace SpaceShooter.Scenes
 
         private void Update()
         {
-            if (this.GameEnded)
-            {
-                //If game ended, check for restart keypress
-                if (Input.GetKeyDown(KeyCode.R))
-                {
-                    GameLogic.LoadScene(GameScenes.GAME);
-                }
-            }
-            else if (!this.bossFight && !this.enemyController.IsRunning)
+            if (!this.bossFight && !this.enemyController.IsRunning)
             {
                     StartRandomController();
             }

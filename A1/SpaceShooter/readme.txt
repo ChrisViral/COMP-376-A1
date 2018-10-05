@@ -1,7 +1,5 @@
-Controls (because I'm too lazy to put them in the in game help menu):
 
-Movement: WASD/Arrow keys
-Fire:	  Right Mouse Click/Left CRTL
+		~~ SPACE SHOOTER ~~
 
 Destroying a whole wave of enemies gives a powerup
 Powerups increases your life and upgrade your gun one level
@@ -9,20 +7,13 @@ Being hit decreases your life and downgrades your gun. If your gun is level 1, y
 Asteroids give 10 points, red enemies 100 points, purple enemies 200 points, the boss 1000 points, and killing an entire wave doubles your points
 To kill the boss, hit both vulnerabilities (yellow spots) until they dissapear, then hit the red vulnerability to remove health
 
-HARD MODE:
-This is a bullet hell mode. Bullets will wrap around the playing field up to three times, from front to back, and side to side. You can be hit by
-your own bullets, enemies cannot be hit by theirs. Red enemies now shoot as well. Enemies shoot cleverly when you are in front of them and not
-at random. The boss has twice normal health and will shoot his gun which is closest to you. Asteroids keep coming in during the boss fight.
-
-~~~ This mode is HARD. You have been warned. ~~~
-
 ===========================================================
 
 Compilation info: The game has been developped on Unity 2018.2.7f1, on Windows 10, with .NET Runtimes 4.X
 Building should work straight out of the box from the context menu, making sure that the scene Menu is at
 index 0 and the scene Game at index 1.
 
-========================= CREDITS =========================
+~=~=~=~=~=~=~=~=~=~=~=~=~ CREDITS ~=~=~=~=~=~=~=~=~=~=~=~=~
 
 All the work of this project is exclusively done by Christophe Savard.
 All assets are taken from free public sources.

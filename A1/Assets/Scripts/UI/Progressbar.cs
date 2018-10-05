@@ -17,6 +17,8 @@ namespace SpaceShooter.UI
         private Text label;
         [SerializeField, Range(0f, 1f)]
         private float progress = 1f;
+        [SerializeField]
+        private bool scaling;
 
         //Private fields
         private Vector2 originalSize;
@@ -43,6 +45,11 @@ namespace SpaceShooter.UI
         {
             this.originalSize = this.bar.rect.size;
             this.Progress = this.progress;
+        }
+
+        private void Update()
+        {
+            if (this.scaling) { this.Progress = this.progress; }
         }
         #endregion
     }
