@@ -17,7 +17,7 @@ namespace SpaceShooter.UI
         private Text label;
         [SerializeField, Range(0f, 1f)]
         private float progress = 1f;
-        [SerializeField]
+        [SerializeField, HideInInspector]
         private bool scaling;
 
         //Private fields
@@ -49,6 +49,7 @@ namespace SpaceShooter.UI
 
         private void Update()
         {
+            //If scaling the bar
             if (this.scaling) { this.Progress = this.progress; }
         }
         #endregion

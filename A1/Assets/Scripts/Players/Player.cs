@@ -15,10 +15,6 @@ namespace SpaceShooter.Players
         /// Max player level
         /// </summary>
         public const int MAX_LEVEL = 2;
-        /// <summary>
-        /// Life off alpha value
-        /// </summary>
-        private const float OFF = 0.25f;
         #endregion
 
         #region Fields
@@ -28,7 +24,7 @@ namespace SpaceShooter.Players
         [SerializeField]
         private Shield shield;
         [SerializeField]
-        private Graphic[] lives;
+        private Animator[] lives;
         [SerializeField, Header("Powerup")]
         private AudioClip powerupSound;
         [SerializeField]
@@ -59,7 +55,7 @@ namespace SpaceShooter.Players
             if (this.Level < 2)
             {
                 this.source.PlayOneShot(this.powerupSound, this.powerupVolume);
-                this.lives[++this.Level].CrossFadeAlpha(1f, 0f, true);
+                this.lives[++this.Level].SetTrigger("Toggle");
             }
             return this.Level;
         }
@@ -72,7 +68,7 @@ namespace SpaceShooter.Players
         {
             if (this.Level >= 0)
             {
-                this.lives[this.Level--].CrossFadeAlpha(OFF, 0f, true);
+                this.lives[this.Level--].SetTrigger("Toggle");
             }
             return this.Level;
         }
@@ -84,7 +80,7 @@ namespace SpaceShooter.Players
         {
             if (this.invulnerable) { return false; }
 
-            Debug.Log($"Die called at level {this.Level}");
+            Log($"Die called at level {this.Level}");
             //Make sure life is back to zero
             if (DecrementLevel() < 0)
             {
@@ -131,12 +127,8 @@ namespace SpaceShooter.Players
         #endregion
 
         #region Functions
-        private void Start()
-        {
-            //Crossfade both secondary icons
-            this.lives[1].CrossFadeAlpha(OFF, 0f, true);
-            this.lives[2].CrossFadeAlpha(OFF, 0f, true);
-        }
+        //Set first life indicator to true
+        private void Start() => this.lives[0].SetTrigger("Toggle");
 
         protected override void OnUpdate()
         {
