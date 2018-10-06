@@ -9,7 +9,7 @@ namespace SpaceShooter.Scenes
     /// Menu flow controller
     /// </summary>
     [DisallowMultipleComponent, RequireComponent(typeof(Animator))]
-    public class Menu : MonoBehaviour
+    public class Menu : LoggingBehaviour
     {
         #region Fields
         //Private fields
@@ -52,7 +52,13 @@ namespace SpaceShooter.Scenes
         #endregion
 
         #region Functions
-        private void Awake() => this.menuAnimator = GetComponent<Animator>();
+        protected override void OnAwake()
+        {
+            //Calling base OnAwake()
+            base.OnAwake();
+            //Getting menu animator
+            this.menuAnimator = GetComponent<Animator>();
+        }
         #endregion
     }
 }

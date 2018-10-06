@@ -61,7 +61,7 @@ namespace SpaceShooter.Utils
                     if (other.GetComponent<Bolt>().Active)
                     {
                         Explode();
-                        GameLogic.CurrentGame.UpdateScore(this.points);
+                        GameLogic.CurrentGame.Score += this.points;
                         if (this.Listener != null) { this.Listener.OnKilled(); }
                     }
                     break;

@@ -1,4 +1,5 @@
-﻿using SpaceShooter.Scenes;
+﻿using System.Text;
+using SpaceShooter.Scenes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -27,21 +28,14 @@ namespace SpaceShooter
     /// Game logic controller
     /// </summary>
     [DisallowMultipleComponent, RequireComponent(typeof(AudioSource))]
-    public class GameLogic : MonoBehaviour
+    public sealed class GameLogic : Singleton<GameLogic>
     {
-        #region Instance
-        /// <summary>
-        /// GameLogic instance
-        /// </summary>
-        public static GameLogic Instance { get; private set; }
-        #endregion
-
         #region Events
         /// <summary>
         /// OnPause Delegate
         /// </summary>
         /// <param name="state">The current state of the game (paused or not)</param>
-        public delegate void PauseDelegate(bool state);
+        public delegate void PauseDelegate(bool paused);
 
         /// <summary>
         /// On game pause event
@@ -81,6 +75,8 @@ namespace SpaceShooter
                     isPaused = value;
                     Time.timeScale = isPaused ? 0f : 1f;
 
+                    Instance.Log($"Game {(isPaused ? "paused" : "unpaused")}");
+
                     //Fire pause event
                     OnPause?.Invoke(isPaused);
                 }
@@ -116,12 +112,39 @@ namespace SpaceShooter
         /// </summary>
         internal static void Quit()
         {
-            Debug.Log("Exiting game...");
+            Instance.Log("Exiting game...");
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
 #else
             Application.Quit();
 #endif
+        }
+
+        /// <summary>
+        /// Converts an ALL_CAPS string to CamelCase
+        /// </summary>
+        /// <param name="s">String to convert</param>
+        /// <returns>The CamelCase version of <paramref name="s"/></returns>
+        private static string ToCamelCase(string s)
+        {
+            //Setup Stringbuilder
+            bool upper = true;
+            StringBuilder sb = new StringBuilder(s.Length);
+
+            //Loop through reference string
+            foreach (char c in s)
+            {
+                //Add characters correctly
+                if (c == '_') { upper = true; }
+                else if (upper)
+                {
+                    sb.Append(c);
+                    upper = false;
+                }
+                else { sb.Append(char.ToLower(c)); }
+            }
+            //Return the final string
+            return sb.ToString();
         }
         #endregion
 
@@ -151,24 +174,21 @@ namespace SpaceShooter
                         }
                         break;
             }
-            Debug.Log($"Scene loaded: {loadedScene}");
+            Log($"Scene loaded - {ToCamelCase(loadedScene.ToString())}");
             CurrentScene = loadedScene;
         }
         #endregion
 
         #region Functions
-        private void Awake()
+        protected override void OnAwake()
         {
-            //Only allow one instance to exist
-            if (Instance != null)
-            {
-                Destroy(this.gameObject);
-                return;
-            }
+            //Calling base method
+            base.OnAwake();
 
-            //Setup GameLogic instance
-            Instance = this;
-            DontDestroyOnLoad(this.gameObject);
+            //Opening message
+            Log("Game started");
+
+            //Add scene load event
             SceneManager.sceneLoaded += OnSceneLoaded;
 
             //Setup audio
@@ -184,6 +204,9 @@ namespace SpaceShooter
                 IsPaused = true;
             }
         }
+
+        //Make sure to remove event
+        private void OnDestroy() => SceneManager.sceneLoaded -= OnSceneLoaded;
         #endregion
     }
 }

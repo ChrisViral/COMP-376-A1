@@ -14,7 +14,7 @@ namespace SpaceShooter.Scenes
     /// Gameplay flow controller
     /// </summary>
     [DisallowMultipleComponent]
-    public class Game : MonoBehaviour
+    public class Game : LoggingBehaviour
     {
         #region Fields
         //Inspector fields
@@ -32,6 +32,10 @@ namespace SpaceShooter.Scenes
         private Animator uiAnimator;
         [SerializeField]
         private float bossUISpeed, endUISpeed;
+        [SerializeField]
+        private GameObject nameField;
+        [SerializeField]
+        private bool startPaused;
         [SerializeField, Header("Enemy waves")]
         private int waves;
         [SerializeField, Tooltip("Asteroid spawner")]
@@ -50,9 +54,8 @@ namespace SpaceShooter.Scenes
         private float bossDelay;
         [SerializeField, Tooltip("Boss health bar")]
         internal Progressbar bossProgressbar;
-
+        
         //Private fields
-        private int score;
         private bool bossFight;
         private WaveController asteroidController, enemyController;
         #endregion
@@ -62,19 +65,23 @@ namespace SpaceShooter.Scenes
         /// If the Game has been ended (either winning or losing)
         /// </summary>
         public bool GameEnded { get; private set; }
+
+        private int score;
+        /// <summary>
+        /// Score of this game
+        /// </summary>
+        public int Score
+        {
+            get { return this.score; }
+            set
+            {
+                this.score = value;
+                this.scoreLabel.text = $"Score: {this.score}";
+            }
+        }
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Updates the current player score by adding the specified amount of points
-        /// </summary>
-        /// <param name="added">Points to add</param>
-        public void UpdateScore(int added)
-        {
-            this.score += added;
-            this.scoreLabel.text = $"Score: {this.score}";
-        }
-
         /// <summary>
         /// Ends the game cycle
         /// </summary>
@@ -121,6 +128,7 @@ namespace SpaceShooter.Scenes
         private IEnumerator<YieldInstruction> LoseTransition()
         {
             //Update UI and fade
+            this.nameField.SetActive(false);
             this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed * 2f);
             this.uiAnimator.SetTrigger("End");
             yield return new WaitForSeconds(2f / this.endUISpeed);
@@ -168,12 +176,12 @@ namespace SpaceShooter.Scenes
         /// </summary>
         public void WaveDestroyed()
         {
-            this.score *= 2;
+            this.Score *= 2;
 
             if (this.player.Level < Player.MAX_LEVEL)
             {
                 Instantiate(this.powerup, this.powerupSpawn, Quaternion.identity);
-                Debug.Log("A powerup has been created!");
+                Log("A powerup has been created!");
             }
         }
 
@@ -200,15 +208,30 @@ namespace SpaceShooter.Scenes
         /// <summary>
         /// Restarts a new game
         /// </summary>
-        public void OnRestart() => GameLogic.LoadScene(GameScenes.GAME);
+        public void OnRestart()
+        {
+            GameLogic.IsPaused = false;
+            GameLogic.LoadScene(GameScenes.GAME);
+        }
         #endregion
 
         #region Functions
         //Add OnPause listener
-        private void Awake() => GameLogic.OnPause += OnPause;
+        protected override void OnAwake()
+        {
+            //Calling base OnAwake
+            base.OnAwake();
+
+            //Add to pause event
+            //Add to pause event
+            GameLogic.OnPause += OnPause;
+        }
 
         private void Start()
         {
+            //Start paused
+            GameLogic.IsPaused = this.startPaused;
+
             //Set important stuff
             this.uiAnimator.SetFloat("BossSpeed", this.bossUISpeed);
             this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed);

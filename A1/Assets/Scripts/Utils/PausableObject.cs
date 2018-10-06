@@ -5,7 +5,7 @@ namespace SpaceShooter.Utils
     /// <summary>
     /// Object whose behaviour an be paused by the game
     /// </summary>
-    public abstract class PausableObject : MonoBehaviour
+    public abstract class PausableObject : LoggingBehaviour
     {
         #region Virtual Methods
         /// <summary>

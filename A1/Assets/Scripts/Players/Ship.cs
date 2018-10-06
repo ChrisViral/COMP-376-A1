@@ -72,8 +72,13 @@ namespace SpaceShooter.Players
         #endregion
 
         #region Functions
-        //Get the audio source
-        protected override void OnAwake() => this.source = GetComponent<AudioSource>();
+        protected override void OnAwake()
+        {
+            //Call base Awake()
+            base.OnAwake();
+            //Get the audio source
+            this.source = GetComponent<AudioSource>();
+        }
 
         //Fires the gun as soon as possible
         protected override void OnUpdate() => FireGun();

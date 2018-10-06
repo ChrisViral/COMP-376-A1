@@ -6,7 +6,7 @@ namespace SpaceShooter.Waves
     /// <summary>
     /// Enemy wave controller class
     /// </summary>
-    public abstract class WaveController : MonoBehaviour
+    public abstract class WaveController : LoggingBehaviour
     {
         #region Fields
         //Inspector fields
