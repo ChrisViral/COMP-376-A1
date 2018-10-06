@@ -14,7 +14,7 @@ namespace SpaceShooter.UI
         [SerializeField]
         private Text scorePrefab, highscoreLabel, enteredName;
         [SerializeField]
-        private Button addButton;
+        private CanvasGroup nameField;
         [SerializeField]
         private float spacing;
 
@@ -44,9 +44,7 @@ namespace SpaceShooter.UI
             }
 
             //Turn off button
-            this.addButton.interactable = false;
-
-
+            this.nameField.interactable = false;
         }
 
         /// <summary>

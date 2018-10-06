@@ -144,7 +144,7 @@ namespace SpaceShooter.Players
 
             //Clean out the remaining stuff
             Game game = GameLogic.CurrentGame;
-            game.UpdateScore(this.score);
+            game.Score += this.score;
             game.EndGame(true);
             Destroy(this.gameObject);
             return true;

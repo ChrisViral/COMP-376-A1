@@ -878,9 +878,9 @@ CanvasGroup:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 413280673}
   m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
   m_IgnoreParentGroups: 0
 --- !u!1001 &417618099
 Prefab:
@@ -1286,7 +1286,7 @@ MonoBehaviour:
   lensIntensity: 0
   glowLayer:
     serializedVersion: 2
-    m_Bits: 2
+    m_Bits: 4294967295
   glowType: 0
   glowTint: {r: 1, g: 1, b: 1, a: 0}
   blurSpreadInner: 0.6
@@ -1847,7 +1847,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.000015197837}
+  m_AnchoredPosition: {x: 0, y: 0.000011839215}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &853777459
@@ -2085,7 +2085,8 @@ MonoBehaviour:
   uiAnimator: {fileID: 1633238802}
   bossUISpeed: 0.16666667
   endUISpeed: 0.4
-  startPaused: 1
+  nameField: {fileID: 1791222109}
+  startPaused: 0
   waves: 5
   asteroids: {fileID: 1123634390314820, guid: 942f717016ec0e24a98d7d7c562bcfa6, type: 2}
   enemies:
@@ -3489,6 +3490,7 @@ GameObject:
   - component: {fileID: 1791222113}
   - component: {fileID: 1791222112}
   - component: {fileID: 1791222111}
+  - component: {fileID: 1791222114}
   m_Layer: 5
   m_Name: Name Field
   m_TagString: Untagged
@@ -3614,6 +3616,17 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1791222109}
   m_CullTransparentMesh: 0
+--- !u!225 &1791222114
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1791222109}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1798683959
 GameObject:
   m_ObjectHideFlags: 0
@@ -4390,7 +4403,7 @@ MonoBehaviour:
     type: 2}
   highscoreLabel: {fileID: 273433359}
   enteredName: {fileID: 1065985002}
-  addButton: {fileID: 1186545523}
+  nameField: {fileID: 1791222114}
   spacing: -15
 --- !u!4 &2089602556 stripped
 Transform:

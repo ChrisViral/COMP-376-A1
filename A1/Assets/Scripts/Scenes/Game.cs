@@ -33,6 +33,8 @@ namespace SpaceShooter.Scenes
         [SerializeField]
         private float bossUISpeed, endUISpeed;
         [SerializeField]
+        private GameObject nameField;
+        [SerializeField]
         private bool startPaused;
         [SerializeField, Header("Enemy waves")]
         private int waves;
@@ -63,24 +65,23 @@ namespace SpaceShooter.Scenes
         /// If the Game has been ended (either winning or losing)
         /// </summary>
         public bool GameEnded { get; private set; }
-        
+
+        private int score;
         /// <summary>
         /// Score of this game
         /// </summary>
-        public int Score { get; private set; }
+        public int Score
+        {
+            get { return this.score; }
+            set
+            {
+                this.score = value;
+                this.scoreLabel.text = $"Score: {this.score}";
+            }
+        }
         #endregion
 
         #region Methods
-        /// <summary>
-        /// Updates the current player Score by adding the specified amount of points
-        /// </summary>
-        /// <param name="added">Points to add</param>
-        public void UpdateScore(int added)
-        {
-            this.Score += added;
-            this.scoreLabel.text = $"Score: {this.Score}";
-        }
-
         /// <summary>
         /// Ends the game cycle
         /// </summary>
@@ -127,6 +128,7 @@ namespace SpaceShooter.Scenes
         private IEnumerator<YieldInstruction> LoseTransition()
         {
             //Update UI and fade
+            this.nameField.SetActive(false);
             this.uiAnimator.SetFloat("EndSpeed", this.endUISpeed * 2f);
             this.uiAnimator.SetTrigger("End");
             yield return new WaitForSeconds(2f / this.endUISpeed);

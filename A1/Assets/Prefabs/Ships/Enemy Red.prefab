@@ -318,7 +318,7 @@ MonoBehaviour:
   bolt: {fileID: 1309078589653372, guid: 159e3a4aa30f86c4892126ad7a181e5b, type: 2}
   boltSound: {fileID: 8300000, guid: 1be4472894949437694aead55c6da60f, type: 3}
   shotVolume: 0.5
-  fireRate: 1
+  fireRate: 1.25
   gun: {fileID: 4983258520625224}
   canShoot: 1
   minDelay: 0.5

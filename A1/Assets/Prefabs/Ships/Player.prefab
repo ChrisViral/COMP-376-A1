@@ -515,8 +515,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 02879daf976026547a21df594c12276b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 8.5
-  tilt: 2.5
+  speed: 9
+  tilt: 4
   explosion: {fileID: 100008, guid: a93496017806b7740910df5fd946f306, type: 2}
   bolt: {fileID: 1800761522205330, guid: 0457d0425e11fd24ea9c361165fd9151, type: 2}
   boltSound: {fileID: 8300000, guid: bf75b984df8a84987bcf3a8bf6e2862d, type: 3}
@@ -536,6 +536,7 @@ MonoBehaviour:
   - {fileID: 0}
   powerupSound: {fileID: 8300000, guid: a4a9327e98855524c846cc8e2f559e96, type: 3}
   powerupVolume: 0.5
+  invulnerable: 0
 --- !u!114 &114876762308333878
 MonoBehaviour:
   m_ObjectHideFlags: 1

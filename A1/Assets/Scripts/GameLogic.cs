@@ -1,4 +1,5 @@
-﻿using SpaceShooter.Scenes;
+﻿using System.Text;
+using SpaceShooter.Scenes;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -118,6 +119,33 @@ namespace SpaceShooter
             Application.Quit();
 #endif
         }
+
+        /// <summary>
+        /// Converts an ALL_CAPS string to CamelCase
+        /// </summary>
+        /// <param name="s">String to convert</param>
+        /// <returns>The CamelCase version of <paramref name="s"/></returns>
+        private static string ToCamelCase(string s)
+        {
+            //Setup Stringbuilder
+            bool upper = true;
+            StringBuilder sb = new StringBuilder(s.Length);
+
+            //Loop through reference string
+            foreach (char c in s)
+            {
+                //Add characters correctly
+                if (c == '_') { upper = true; }
+                else if (upper)
+                {
+                    sb.Append(c);
+                    upper = false;
+                }
+                else { sb.Append(char.ToLower(c)); }
+            }
+            //Return the final string
+            return sb.ToString();
+        }
         #endregion
 
         #region Methods
@@ -146,7 +174,7 @@ namespace SpaceShooter
                         }
                         break;
             }
-            Log($"Scene loaded - {loadedScene}");
+            Log($"Scene loaded - {ToCamelCase(loadedScene.ToString())}");
             CurrentScene = loadedScene;
         }
         #endregion
