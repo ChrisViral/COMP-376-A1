@@ -20,6 +20,7 @@ namespace SpaceShooter
     /// </summary>
     public enum GameMode
     {
+        NONE,
         NORMAL,
         HARD
     }
@@ -52,7 +53,7 @@ namespace SpaceShooter
         /// <summary>
         /// Curent GameMode
         /// </summary>
-        public static GameMode Mode { get; internal set; }
+        public static GameMode Mode { get; internal set; } = GameMode.NONE;
 
         /// <summary>
         /// If currently in Hard mode
@@ -112,6 +113,7 @@ namespace SpaceShooter
         /// </summary>
         internal static void Quit()
         {
+            //Exit depending on current situation
             Instance.Log("Exiting game...");
 #if UNITY_EDITOR
             EditorApplication.isPlaying = false;
@@ -161,6 +163,7 @@ namespace SpaceShooter
             {
                     case GameScenes.MENU:
                         CurrentGame = null;
+                        Mode = GameMode.NONE;
                         this.source.clip = this.menuMusic;
                         this.source.Play();
                         break;
