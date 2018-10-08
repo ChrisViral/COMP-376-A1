@@ -80,7 +80,7 @@ namespace SpaceShooter.Players
         {
             if (this.invulnerable) { return false; }
 
-            Log($"Die called at level {this.Level}");
+            this.Log($"Die called at level {this.Level}");
             //Make sure life is back to zero
             if (DecrementLevel() < 0)
             {

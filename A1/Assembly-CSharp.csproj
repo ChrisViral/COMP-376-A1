@@ -54,10 +54,10 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\_MK\MKGlow\MKGlow.cs" />
+     <Compile Include="Assets\Scripts\Extensions\MonoBehaviourExtensions.cs" />
      <Compile Include="Assets\Scripts\Extensions\StreamReaderExtensions.cs" />
      <Compile Include="Assets\Scripts\GameLogic.cs" />
      <Compile Include="Assets\Scripts\HighscoreController.cs" />
-     <Compile Include="Assets\Scripts\LoggingBehaviour.cs" />
      <Compile Include="Assets\Scripts\Physics\AccelerationMovement.cs" />
      <Compile Include="Assets\Scripts\Physics\Bolt.cs" />
      <Compile Include="Assets\Scripts\Physics\FigureEightMovement.cs" />
@@ -85,6 +85,8 @@
      <Compile Include="Assets\Scripts\Utils\CameraAspectRatio.cs" />
      <Compile Include="Assets\Scripts\Utils\ContactDestroy.cs" />
      <Compile Include="Assets\Scripts\Utils\GameBoundary.cs" />
+     <Compile Include="Assets\Scripts\Utils\MaterialBlinker.cs" />
+     <Compile Include="Assets\Scripts\Utils\MovingAverage.cs" />
      <Compile Include="Assets\Scripts\Utils\PausableObject.cs" />
      <Compile Include="Assets\Scripts\Utils\ProjectileDestroyer.cs" />
      <Compile Include="Assets\Scripts\Waves\AsteroidWaveController.cs" />

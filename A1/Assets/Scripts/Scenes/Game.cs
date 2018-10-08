@@ -14,7 +14,7 @@ namespace SpaceShooter.Scenes
     /// Gameplay flow controller
     /// </summary>
     [DisallowMultipleComponent]
-    public class Game : LoggingBehaviour
+    public class Game : MonoBehaviour
     {
         #region Fields
         //Inspector fields
@@ -108,6 +108,7 @@ namespace SpaceShooter.Scenes
 
             //Stop player movement
             this.player.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            //Lock boss progressbar
 
             //Wait for the endgame
             yield return new WaitForSeconds(this.endGameWait);
@@ -181,7 +182,7 @@ namespace SpaceShooter.Scenes
             if (this.player.Level < Player.MAX_LEVEL)
             {
                 Instantiate(this.powerup, this.powerupSpawn, Quaternion.identity);
-                Log("A powerup has been created!");
+                this.Log("A powerup has been created!");
             }
         }
 
@@ -217,15 +218,7 @@ namespace SpaceShooter.Scenes
 
         #region Functions
         //Add OnPause listener
-        protected override void OnAwake()
-        {
-            //Calling base OnAwake
-            base.OnAwake();
-
-            //Add to pause event
-            //Add to pause event
-            GameLogic.OnPause += OnPause;
-        }
+        private void Awake() => GameLogic.OnPause += OnPause;
 
         private void Start()
         {

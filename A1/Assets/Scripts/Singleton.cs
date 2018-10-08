@@ -7,7 +7,7 @@ namespace SpaceShooter
     /// </summary>
     /// <typeparam name="T">MonoBehaviour type</typeparam>
     [DisallowMultipleComponent]
-    public abstract class Singleton<T> : LoggingBehaviour where T : MonoBehaviour
+    public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         #region Instance
         /// <summary>
@@ -16,11 +16,15 @@ namespace SpaceShooter
         public static T Instance { get; private set; }
         #endregion
 
-        #region Functions
+        #region Virtual methods
         /// <summary>
-        /// Awake() function
+        /// This is called from within Awake, you should override this instead of writing an Awake() method
         /// </summary>
-        protected override void OnAwake()
+        protected virtual void OnAwake() { }
+        #endregion
+
+        #region Functions
+        private void Awake()
         {
             //Check for an existing instance
             if (Instance)
@@ -32,6 +36,9 @@ namespace SpaceShooter
             //If none exist, create it
             Instance = this as T;
             DontDestroyOnLoad(this.gameObject);
+
+            //Call children Awake()
+            OnAwake();
         }
         #endregion
     }
