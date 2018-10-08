@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SpaceShooter.Physics;
 using SpaceShooter.Scenes;
 using SpaceShooter.UI;
+using SpaceShooter.Utils;
 using UnityEngine;
 
 namespace SpaceShooter.Players
@@ -32,7 +33,9 @@ namespace SpaceShooter.Players
         [SerializeField]
         private int explosionCount, score;
         [SerializeField]
-        private int maxHealth;
+        private int maxHealth; 
+        [SerializeField]
+        private MaterialBlinker blinker;
 
         //Private fields
         private Player player;
@@ -77,7 +80,11 @@ namespace SpaceShooter.Players
         /// <summary>
         /// Vulnerability hit event
         /// </summary>
-        public void HitVulnerability() => this.source.PlayOneShot(this.vulnerabilitySound, this.vulnerabilityVolume);
+        public void HitVulnerability()
+        {
+            this.source.PlayOneShot(this.vulnerabilitySound, this.vulnerabilityVolume);
+            this.blinker.Blink(0);
+        }
 
         /// <summary>
         /// Vulnerability destroyed event
@@ -120,13 +127,19 @@ namespace SpaceShooter.Players
         /// </summary>
         public void HitCore()
         {
+
             this.source.PlayOneShot(this.vulnerabilitySound, this.vulnerabilityVolume);
-            this.healthbar.Progress = Mathf.Round((--this.hp * 100f) / this.maxHP) / 100f;  //Prevents some weird rounding errors
+            this.healthbar.Progress = --this.hp / this.maxHP;
 
             //If out of HP, kill the Boss
             if (this.hp == 0)
             {
                 Die();
+            }
+            else
+            {
+                //Else blink
+                this.blinker.Blink(1);
             }
         }
 

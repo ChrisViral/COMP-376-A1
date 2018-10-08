@@ -177,7 +177,7 @@ namespace SpaceShooter
                         }
                         break;
             }
-            Log($"Scene loaded - {ToCamelCase(loadedScene.ToString())}");
+            this.Log($"Scene loaded - {ToCamelCase(loadedScene.ToString())}");
             CurrentScene = loadedScene;
         }
         #endregion
@@ -185,11 +185,8 @@ namespace SpaceShooter
         #region Functions
         protected override void OnAwake()
         {
-            //Calling base method
-            base.OnAwake();
-
             //Opening message
-            Log("Game started");
+            this.Log("Game started");
 
             //Add scene load event
             SceneManager.sceneLoaded += OnSceneLoaded;

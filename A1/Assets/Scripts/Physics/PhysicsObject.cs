@@ -16,17 +16,21 @@ namespace SpaceShooter.Physics
         protected new Rigidbody rigidbody;
         #endregion
 
-        #region Functions
+        #region Virtual methods
         /// <summary>
-        /// Awake() function
+        /// This is called from within Awake, you should override this instead of writing an Awake() method
         /// </summary>
-        protected override void OnAwake()
-        {
-            //Call base OnAwake method
-            base.OnAwake();
+        protected virtual void OnAwake() { }
+        #endregion
 
+        #region Functions
+        private void Awake()
+        {
             //Get Rigidbody from components
             this.rigidbody = GetComponent<Rigidbody>();
+
+            //Call children Awake method
+            OnAwake();
         }
         #endregion
     }

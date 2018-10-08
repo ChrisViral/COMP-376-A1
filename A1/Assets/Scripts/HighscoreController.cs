@@ -242,7 +242,7 @@ namespace SpaceShooter
         private void CreateSaveFile(string message)
         {
             //Log message then create file
-            LogError(message);
+            this.LogError(message);
             File.WriteAllText(FilePath, template);
         }
 
@@ -252,7 +252,7 @@ namespace SpaceShooter
         private void LoadFile()
         {
             //Log start message
-            Log($"Loading Highscores file @ {FilePath}");
+            this.Log($"Loading Highscores file @ {FilePath}");
 
             //Check if file exists, if not create it
             if (!File.Exists(FilePath)) { CreateSaveFile("Highscore file not found, creating file"); }
@@ -261,7 +261,7 @@ namespace SpaceShooter
                 //Error flag
                 bool mustResave = false;
 
-                Log($"Highscore file:\n{File.ReadAllText(FilePath)}");
+                this.Log($"Highscore file:\n{File.ReadAllText(FilePath)}");
 
                 //Open file for reading
                 using (StreamReader reader = File.OpenText(FilePath))
@@ -279,31 +279,31 @@ namespace SpaceShooter
                     //Reading normal scores
                     if (line == normalTag)
                     {
-                        Log("Loading normal scores");
+                        this.Log("Loading normal scores");
                         line = LoadScores(reader, this.NormalScores);
                     }
                     else
                     {
-                        LogError("Could not find normal tag, proceeding");
+                        this.LogError("Could not find normal tag, proceeding");
                         mustResave = true;
                     }
 
                     //Loading hard scores
                     if (line == hardTag)
                     {
-                        Log("Loading hard scores");
+                        this.Log("Loading hard scores");
                         line = LoadScores(reader, this.HardScores);
                     }
                     else
                     {
-                        LogError("Could not find hard tag, proceeding");
+                        this.LogError("Could not find hard tag, proceeding");
                         mustResave = true;
                     }
 
                     //Check for trailing data
                     if (line != null)
                     {
-                        LogError("Save file has trailing information");
+                        this.LogError("Save file has trailing information");
                         mustResave = true;
                     }
                 }
@@ -319,7 +319,7 @@ namespace SpaceShooter
         private void SaveFile()
         {
             //Log message
-            Log($"Saving Highscore file @ {FilePath}");
+            this.Log($"Saving Highscore file @ {FilePath}");
 
             //Open file for writing
             using (StreamWriter writer = File.CreateText(FilePath))
@@ -364,12 +364,12 @@ namespace SpaceShooter
                 //Catch parse exceptions
                 catch (Exception e)
                 {
-                    LogException(e, "Error encountered while loading Highscore");
+                    this.LogException(e, "Error encountered while loading Highscore");
                 }
             }
 
             //Print amount loaded
-            Log($"Loaded {list.Count} scores");
+            this.Log($"Loaded {list.Count} scores");
 
             //Return last line read
             return line;
@@ -389,9 +389,6 @@ namespace SpaceShooter
         #region Functions
         protected override void OnAwake()
         {
-            //Calling base method
-            base.OnAwake();
-
             //Load file
             FilePath = Path.Combine(Application.dataPath, FILE_NAME);
             LoadFile();

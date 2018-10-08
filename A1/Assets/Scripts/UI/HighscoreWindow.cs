@@ -5,7 +5,7 @@ using Highscore = SpaceShooter.HighscoreController.Highscore;
 
 namespace SpaceShooter.UI
 {
-    public class HighscoreWindow : LoggingBehaviour
+    public class HighscoreWindow : MonoBehaviour
     {
         #region Fields
         //Inspector fields

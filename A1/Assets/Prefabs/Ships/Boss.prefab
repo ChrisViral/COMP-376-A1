@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 64703268660470798}
   - component: {fileID: 114429477262848738}
   - component: {fileID: 82103626639981994}
+  - component: {fileID: 114630034162156342}
   m_Layer: 0
   m_Name: Model
   m_TagString: Untagged
@@ -280,7 +281,7 @@ Transform:
   - {fileID: 4226031250187384}
   - {fileID: 4561911926558832}
   m_Father: {fileID: 4802958674854972}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4400434281762966
 Transform:
@@ -306,7 +307,7 @@ Transform:
   m_LocalScale: {x: 6, y: 8, z: 2.5}
   m_Children: []
   m_Father: {fileID: 4802958674854972}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4524785847074510
 Transform:
@@ -383,8 +384,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 20}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4318729665568080}
   - {fileID: 4506942511983150}
+  - {fileID: 4318729665568080}
   - {fileID: 4047005425994804}
   - {fileID: 4626469969083126}
   m_Father: {fileID: 0}
@@ -723,7 +724,7 @@ MonoBehaviour:
   bolt: {fileID: 1309078589653372, guid: 159e3a4aa30f86c4892126ad7a181e5b, type: 2}
   boltSound: {fileID: 8300000, guid: 1be4472894949437694aead55c6da60f, type: 3}
   shotVolume: 0.5
-  fireRate: 0.5
+  fireRate: 0.8
   gun: {fileID: 4047005425994804}
   canShoot: 0
   vulnerability: {fileID: 1350895036256318, guid: e712b3e881939d049984d10e6b6708b5,
@@ -742,9 +743,10 @@ MonoBehaviour:
   - {fileID: 4083144596948712}
   - {fileID: 4831200681275996}
   - {fileID: 4524785847074510}
-  explosionCount: 5
+  explosionCount: 7
   score: 1000
   maxHealth: 15
+  blinker: {fileID: 114630034162156342}
 --- !u!114 &114332532753205190
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -797,6 +799,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxSpeed: 0.5
   period: 4
+--- !u!114 &114630034162156342
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1354647486523654}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 39e2770c18433a1448876b2c8c51920b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  blinkMaterials:
+  - {fileID: 2100000, guid: c0f1566cf7f46f548bbaef3c99c64b5b, type: 2}
+  - {fileID: 2100000, guid: 559f435c996fb0144a2f529e736d4706, type: 2}
+  blinkTime: 0.05
 --- !u!135 &135640022503088224
 SphereCollider:
   m_ObjectHideFlags: 1
